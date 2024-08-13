@@ -19,10 +19,10 @@ module.exports = {
         text1:"#475569"
       },
       height:{
-        card:'70vh'
+        card:'77.4vh'
       },
       width:{
-        card1:'75vw'
+        card1:'35vw'
       }
 
     },
