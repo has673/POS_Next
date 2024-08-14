@@ -1,9 +1,9 @@
 import React from "react";
-import Heading from "../Components/Heading";
-import Heading2 from "../Components/Heading2";
-import Para from "../Components/Para";
-import InputField from "../Components/InputField";
-import Button from "../Components/Button";
+import Heading from "../../Components/Heading";
+import Heading2 from "../../Components/Heading2";
+import Para from "../../Components/Para";
+import InputField from "../../Components/InputField";
+import Button from "../../Components/Button";
 import Link from "next/link";
 
 

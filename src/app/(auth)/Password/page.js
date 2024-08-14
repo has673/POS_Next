@@ -1,9 +1,9 @@
 import React from "react";
-import Heading from "../Components/Heading";
-import Heading2 from "../Components/Heading2";
-import Button from "../Components/Button";
-import Para from "../Components/Para";
-import InputField from "../Components/InputField";
+import Heading from "../../Components/Heading";
+import Heading2 from "../../Components/Heading2";
+import Button from "../../Components/Button";
+import Para from "../../Components/Para";
+import InputField from "../../Components/InputField";
 
 
 const page = () => {
