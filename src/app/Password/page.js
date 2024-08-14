@@ -19,7 +19,7 @@ const page = () => {
     <InputField label="Email" type="Email"/>
     
     <InputField label="Password" type="password"/>
-    <Button title='login'/>
+    <Button title='Reset'/>
   </div>
       </div>
 
