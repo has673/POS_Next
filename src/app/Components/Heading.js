@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Heading = () => {
+const Heading = ({text}) => {
   return (
-    <h1 className='text-center font-bold  text-pink  text-6xl' >COSYPOS</h1>
+    <h1 className='text-center font-bold  text-pink  text-6xl' >{text}</h1>
   )
 }
 
