@@ -6,9 +6,11 @@ const page = () => {
   return (
     <>
       <Heading text="CYPSOS" />
-      <div className="flex items-center justify-center">
+      <div className="flex flex-col justify-center items-center ">
       <Card/>
       </div>
+      
+
       </>
       
   

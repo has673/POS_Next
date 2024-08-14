@@ -16,13 +16,14 @@ module.exports = {
         pink:'#FAC1D9',
         bg:'#292C2D',
         text:  '#64748B',
-        text1:"#475569"
+        text1:"#475569",
+        input:"#3D4142"
       },
       height:{
-        card:'77.4vh'
+        card:'50vh'
       },
       width:{
-        card1:'35vw'
+        card1:'30vw'
       }
 
     },
