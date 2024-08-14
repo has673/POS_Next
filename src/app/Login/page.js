@@ -4,6 +4,7 @@ import Heading2 from "../Components/Heading2";
 import Para from "../Components/Para";
 import InputField from "../Components/InputField";
 import Button from "../Components/Button";
+import Link from "next/link";
 
 
 const page = () => {
@@ -16,9 +17,10 @@ const page = () => {
       <Heading2 text="Login" />
       <Para content='Please enter your credentials below to continue'/>
 
-      <InputField label="Email" type="Email"/>
+      <InputField label="Email" type="Email" placeholder='Enter your Username'/>
       
-      <InputField label="Password" type="password"/>
+      <InputField label="Password" type="password" placeholder='Enter your Password'/>
+      <Link href='/Password'><p className="bg-bg text-pink mb-3">Forgot Password?</p></Link>
       <Button title='login'/>
     </div>
       </div>

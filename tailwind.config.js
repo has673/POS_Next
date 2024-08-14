@@ -17,7 +17,10 @@ module.exports = {
         bg:'#292C2D',
         text:  '#64748B',
         text1:"#475569",
-        input:"#3D4142"
+        input:"#3D4142",
+        placeholderColor: '#777979'
+
+
       },
       height:{
         card:'50vh'
