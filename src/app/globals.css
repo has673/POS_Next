@@ -16,10 +16,14 @@
   #text:hover{
     @apply bg-pink text-black;
   }
-}
+   #box{
+    @apply bg-black min-h-screen
 
+   }
+}
+/* 
 *{
   
   margin: 0;
   padding: 0;
-}
+} */

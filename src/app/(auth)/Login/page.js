@@ -52,7 +52,7 @@ const page = () => {
   
   };
   return (
-    <>
+    <div id="box">
       <Heading text="CYPSOS" />
       <div className="flex flex-col justify-center items-center ">
         <div className="bg-bg h-card w-card1 rounded-4xl text-center rounded-lg">
@@ -82,7 +82,7 @@ const page = () => {
           <Button title="login" onClick={handleSubmit} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
