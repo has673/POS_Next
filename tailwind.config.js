@@ -23,10 +23,12 @@ module.exports = {
 
       },
       height:{
-        card:'50vh'
+        card:'50vh',
+        nav:'100vh'
       },
       width:{
-        card1:'30vw'
+        card1:'30vw',
+        nav:'10vw'
       }
 
     },

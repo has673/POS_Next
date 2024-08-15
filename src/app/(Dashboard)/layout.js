@@ -1,11 +1,7 @@
 import React from 'react'
-
-const layout = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default layout
+import Navbar from '../Components/Navbar';
+export default function layout({ children }) {
+    return <div className='bg-black'>
+    <Navbar/>
+    {children}</div>;
+  }

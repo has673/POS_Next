@@ -8,8 +8,18 @@
   #button:hover {
     @apply bg-input text-white;
   }
+
+  #tab:hover{
+    @apply bg-pink text-white;
+  }
+  
+  #text:hover{
+    @apply bg-pink text-black;
+  }
 }
 
 *{
-  background-color: black;
+  
+  margin: 0;
+  padding: 0;
 }
