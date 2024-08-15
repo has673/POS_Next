@@ -10,7 +10,7 @@
   }
 
   #tab:hover{
-    @apply bg-pink text-white;
+    @apply bg-pink text-black;
   }
   
   #text:hover{
