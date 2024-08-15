@@ -6,7 +6,7 @@ import Button from "../../Components/Button";
 import Para from "../../Components/Para";
 import InputField from "../../Components/InputField";
 
-
+import './style.css'
 
 const page = () => {
 
