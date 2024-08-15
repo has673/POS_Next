@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import Heading from "../../Components/Heading";
 import Heading2 from "../../Components/Heading2";
 import Button from "../../Components/Button";
@@ -6,7 +7,26 @@ import Para from "../../Components/Para";
 import InputField from "../../Components/InputField";
 
 
+
 const page = () => {
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+     [name]:  value ,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log("Form Data Submitted: ", formData);
+    console.log(formData.email);
+  };
   return (
     <>
     <Heading text="CYPSOS" />
@@ -16,10 +36,24 @@ const page = () => {
     <Heading2 text="Recover Password" />
     <Para content='Please enter your credentials below to continue'/>
 
-    <InputField label="Email" type="Email"/>
-    
-    <InputField label="Password" type="password"/>
-    <Button title='Reset'/>
+    <InputField
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="Enter your Username"
+            val={formData.email}
+            onChange={handleChange}
+          />
+
+          <InputField
+            label="Password"
+            name="password"
+            type="password"
+            placeholder="Enter your Password"
+            val={formData.password}
+            onChange={handleChange}
+          />
+    <Button title='Reset' onClick={handleSubmit}/>
   </div>
       </div>
 
