@@ -1,33 +1,38 @@
+// public/array.js (or wherever you have your array)
 export const contentArray = [
-    {
-      imageUrl: "/icon.png", // Replace with your image URL
-      text: 'Dashboard'
-    },
-    {
-      imageUrl: "/icon.png", // Replace with your image URL
-      text: 'Staff'
-    },
-    {
-      imageUrl: "/icon.png", // Replace with your image URL
-      text: 'Menu'
-    },
-    {
-      imageUrl: "/icon.png", // Replace with your image URL
-      text: 'Inventory'
-    },
-    {
-      imageUrl: "/icon.png", // Replace with your image URL
-      text: 'Reservation'
-    },
-    {
-      imageUrl: "/icon.png", // Replace with your image URL
-      text: 'Items'
-    },
-    {
-      imageUrl: "/icon.png", // Replace with your image URL
-      text: 'Dashboard'
-    }
-  ];
-
-
-  
+  {
+    imageUrl: "/icon.png",
+    text: 'Dashboard',
+    route: '/Dashboard'
+  },
+  {
+    imageUrl: "/icon.png",
+    text: 'Staff',
+    route: '/Staff'
+  },
+  {
+    imageUrl: "/icon.png",
+    text: 'Menu',
+    route: '/menu'
+  },
+  {
+    imageUrl: "/icon.png",
+    text: 'Inventory',
+    route: '/inventory'
+  },
+  {
+    imageUrl: "/icon.png",
+    text: 'Reservation',
+    route: '/reservation'
+  },
+  {
+    imageUrl: "/icon.png",
+    text: 'Items',
+    route: '/items'
+  },
+  {
+    imageUrl: "/icon.png",
+    text: 'Admin',
+    route: '/admin'
+  }
+];
