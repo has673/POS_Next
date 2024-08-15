@@ -7,6 +7,7 @@ import InputField from "../../Components/InputField";
 import Button from "../../Components/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import "./style.css"
 
 
 const page = () => {
