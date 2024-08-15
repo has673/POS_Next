@@ -6,12 +6,15 @@ import Para from "../../Components/Para";
 import InputField from "../../Components/InputField";
 import Button from "../../Components/Button";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 
 const page = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  // const router = useRouter();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -19,11 +22,34 @@ const page = () => {
      [name]:  value ,
     }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form Data Submitted: ", formData);
-    console.log(formData.email);
+    try{
+      const response = await fetch('/api/login', { // Replace '/api/login' with your backend login URL
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      console.log("Form Data Submitted: ", formData)
+      console.log(formData.email);
+      if (!response.ok) {
+        // Handle server errors or invalid responses
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
+      }
+
+      const data = await response.json();
+      router.push('/dashboard'); 
+
+    }
+   
+    catch(err){
+      console.log(err)
+    }
+  
   };
   return (
     <>
