@@ -34,8 +34,7 @@ const EmployeeTable = ({ data, onRemove }) => {
             <th className="py-2 px-4 border-r">Name</th>
             <th className="py-2 px-4 border-r">Email</th>
             <th className="py-2 px-4 border-r">Salary</th>
-            <th className="py-2 px-4 border-r">Address</th>
-            <th className="py-2 px-4">Start Date</th>
+            <th className="py-2 px-4 border-r">Phone</th>
             <th className="py-2 px-4">Action</th>
           </tr>
         </thead>
@@ -47,9 +46,8 @@ const EmployeeTable = ({ data, onRemove }) => {
               <td className="py-2 px-4 border-r">{employee.email}</td>
 
               <td className="py-2 px-4 border-r">${employee.salary.toLocaleString()}</td>
-              <td className="py-2 px-4 border-r">{employee.Address}</td>
+              <td className="py-2 px-4 border-r">{employee.phoneNumber}</td>
 
-              <td className="py-2 px-4">{new Date(employee.Starttime).toLocaleDateString()}</td>
               <td className="py-2 px-4 border-r">
               <button onClick={()=>{onRemove(employee.id)}}> <MdDelete /></button>
              
