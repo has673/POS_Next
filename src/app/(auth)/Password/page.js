@@ -5,8 +5,10 @@ import Heading2 from "../../Components/Heading2";
 import Button from "../../Components/Button";
 import Para from "../../Components/Para";
 import InputField from "../../Components/InputField";
+import axios from "axios";
 
 import './style.css'
+import { useRouter } from "next/navigation";
 
 const page = () => {
 
@@ -14,6 +16,7 @@ const page = () => {
     email: "",
     password: "",
   });
+  const router = useRouter()
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -21,11 +24,28 @@ const page = () => {
      [name]:  value ,
     }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form Data Submitted: ", formData);
-    console.log(formData.email);
+    try{
+      const response = await axios.post('http://localhost:4000/auth/recover-password',{
+        email:formData.email,
+        password:formData.password
+      },{
+        withCredentials:true
+      }
+      )
+     
+     console
+      console.log(response.data)
+      router.push('/Login')
+
+    }
+   
+    catch(err){
+      console.log(err)
+    }
+  
   };
   return (
     <>
