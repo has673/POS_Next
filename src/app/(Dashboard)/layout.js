@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../Components/Navbar';
 export default function layout({ children }) {
-    return <div className='bg-black'>
+    return <div>
     <Navbar/>
-    {children}</div>;
+    {children} </div>;
   }

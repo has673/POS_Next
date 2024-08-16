@@ -6,10 +6,15 @@ import Para from "../../Components/Para";
 import InputField from "../../Components/InputField";
 import Button from "../../Components/Button";
 import Link from "next/link";
-import { useRouter } from "next/router";
+
+import { useRouter } from 'next/navigation'
+
+import "./style.css"
+import axios from "axios";
 
 
 const page = () => {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -26,23 +31,17 @@ const page = () => {
 
     e.preventDefault();
     try{
-      const response = await fetch('/api/login', { // Replace '/api/login' with your backend login URL
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-      console.log("Form Data Submitted: ", formData)
-      console.log(formData.email);
-      if (!response.ok) {
-        // Handle server errors or invalid responses
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+      const response = await axios.post('http://localhost:4000/auth/login',{
+        email:formData.email,
+        password:formData.password
+      },{
+        withCredentials:true
       }
-
-      const data = await response.json();
-      router.push('/dashboard'); 
+      )
+     
+      const {token} = response.data
+      console.log(response.data)
+      router.push('/Dashboard')
 
     }
    
