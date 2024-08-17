@@ -1,8 +1,15 @@
 "use client";
-import EmployeeTable from "../../Components/EmployeeTable";
+
 import Subheading from "@/app/Components/Subheading";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import Loading from "../Loading";
+import dynamic from "next/dynamic";
+
+// Dynamic import
+const EmployeeTable = dynamic(() => import("../../Components/EmployeeTable"), {
+  suspense: true,
+});
 
 const Page = () => {
   const [data, setData] = useState([]);
@@ -40,14 +47,16 @@ const Page = () => {
   return (
     <div className="p-4 bg-black w-full text-white">
       <Subheading title="Staff Management" />
-      <h3 className="font-medium text-2xl leading-9 ml-4 mt-6">
-        Staff ({count})
-      </h3>
-      <div className="flex justify-center items-center mt-6">
-        <div className="w-full max-w-6xl">
-          <EmployeeTable data={data} onRemove={remove} />
+      <Suspense fallback={<Loading />}>
+        <h3 className="font-medium text-2xl leading-9 ml-4 mt-6">
+          Staff ({count})
+        </h3>
+        <div className="flex justify-center items-center mt-6">
+          <div className="w-full max-w-6xl">
+            <EmployeeTable data={data} onRemove={remove} />
+          </div>
         </div>
-      </div>
+      </Suspense>
     </div>
   );
 };

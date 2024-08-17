@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Sidebar from "../Components/SideBar";
 import { SideBarArray } from "../../../public/array";
+import Loading from "./Loading";
 
 export default function layout({ children }) {
   return (
