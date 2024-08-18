@@ -53,11 +53,13 @@ const Page = () => {
       </div>
 
       <Suspense fallback={<Loading />}>
-        <div className="flex  justify-around gap-y-96 mt-4">
+        <div className="flex  justify-between items-center mt-4">
           <div>
-            <h3 className="font-medium text-2xl leading-9">Staff ({count})</h3>
+            <h3 className="font-medium text-2xl leading-9 ml-3">
+              Staff ({count})
+            </h3>
           </div>
-          <div>
+          <div className="mr-5">
             <Button title="Add Staff" />
           </div>
         </div>
