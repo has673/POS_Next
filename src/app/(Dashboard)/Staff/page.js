@@ -1,7 +1,9 @@
 "use client";
 
 import Subheading from "@/app/Components/Subheading";
+import Button from "@/app/Components/Button";
 import axios from "axios";
+
 import React, { Suspense, useEffect, useState } from "react";
 import Loading from "../Loading";
 import dynamic from "next/dynamic";
@@ -46,11 +48,19 @@ const Page = () => {
 
   return (
     <div className="p-4 bg-black w-full text-white">
-      <Subheading title="Staff Management" />
+      <div>
+        <Subheading title="Staff Management" />
+      </div>
+
       <Suspense fallback={<Loading />}>
-        <h3 className="font-medium text-2xl leading-9 ml-4 mt-6">
-          Staff ({count})
-        </h3>
+        <div className="flex  justify-around gap-y-96 mt-4">
+          <div>
+            <h3 className="font-medium text-2xl leading-9">Staff ({count})</h3>
+          </div>
+          <div>
+            <Button title="Add Staff" />
+          </div>
+        </div>
         <div className="flex justify-center items-center mt-6">
           <div className="w-full max-w-6xl">
             <EmployeeTable data={data} onRemove={remove} />
