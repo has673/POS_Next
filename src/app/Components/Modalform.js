@@ -1,34 +1,70 @@
 import { Modal, Label, Select } from "flowbite-react";
 import React, { useState } from "react";
 import Button from "./Button";
+import axios from "axios";
 
 const Modalform = ({ onOpen, close }) => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [salary, setSalary] = useState("");
-  const [dob, setDob] = useState("");
-  const [startTiming, setStartTiming] = useState("");
-  const [endTiming, setEndTiming] = useState("");
-  const [address, setAddress] = useState("");
-  const [additionalDetails, setAdditionalDetails] = useState("");
+  const [formData, setFormData] = useState({
+    Name: "",
+    email: "",
+    role: "",
+    Phonenumber: "",
+    salary: "",
+    dateofbirth: "",
+    Starttime: "",
+    Endtime: "",
+    Address: "",
+    Details: "",
+  });
+
   const [modalPlacement, setModalPlacement] = useState("top-right");
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    close(); // Close the modal after submission
-    // Clear input fields if needed
-    setName("");
-    setEmail("");
-    setRole("");
-    setPhoneNumber("");
-    setSalary("");
-    setDob("");
-    setStartTiming("");
-    setEndTiming("");
-    setAddress("");
-    setAdditionalDetails("");
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Convert fields to match Prisma model types
+    const formattedData = {
+      ...formData,
+      salary: parseInt(formData.salary, 10),
+      //   Phonenumber: pa(formData.Phonenumber, 10),
+      dateofbirth: formData.dateofbirth
+        ? new Date(formData.dateofbirth).toISOString()
+        : null,
+      Starttime: formData.Starttime
+        ? `1970-01-01T${formData.Starttime}:00Z`
+        : null,
+      Endtime: formData.Endtime ? `1970-01-01T${formData.Endtime}:00Z` : null,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/employees",
+        formattedData
+      );
+      console.log(response.data);
+      // Clear input fields
+      setFormData({
+        Name: "",
+        email: "",
+        role: "",
+        Phonenumber: "",
+        salary: "",
+        dateofbirth: "",
+        Starttime: "",
+        Endtime: "",
+        Address: "",
+        Details: "",
+      });
+      // Close the modal after submission
+      close();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -49,12 +85,12 @@ const Modalform = ({ onOpen, close }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="name" value="Full Name" className="text-white" />
+              <Label htmlFor="Name" value="Full Name" className="text-white" />
               <input
-                id="name"
+                id="Name"
                 placeholder="Enter full name"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
+                value={formData.Name}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md"
               />
@@ -64,8 +100,8 @@ const Modalform = ({ onOpen, close }) => {
               <input
                 id="email"
                 placeholder="Enter email address"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md"
               />
@@ -76,28 +112,28 @@ const Modalform = ({ onOpen, close }) => {
               <Select
                 id="role"
                 placeholder="Select role"
-                value={role}
-                onChange={(event) => setRole(event.target.value)}
+                value={formData.role}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md"
               >
                 <option value="">Select role</option>
-                <option value="manager">Manager</option>
-                <option value="staff">Staff</option>
+                <option value="MANAGER">MANAGER</option>
+                <option value="STAFF">STAFF</option>
               </Select>
             </div>
 
             <div>
               <Label
-                htmlFor="phoneNumber"
+                htmlFor="Phonenumber"
                 value="Phone Number"
                 className="text-white"
               />
               <input
-                id="phoneNumber"
+                id="Phonenumber"
                 placeholder="Enter phone number"
-                value={phoneNumber}
-                onChange={(event) => setPhoneNumber(event.target.value)}
+                value={formData.Phonenumber}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md"
               />
@@ -108,8 +144,8 @@ const Modalform = ({ onOpen, close }) => {
               <input
                 id="salary"
                 placeholder="Enter salary"
-                value={salary}
-                onChange={(event) => setSalary(event.target.value)}
+                value={formData.salary}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md"
               />
@@ -117,16 +153,16 @@ const Modalform = ({ onOpen, close }) => {
 
             <div>
               <Label
-                htmlFor="dob"
+                htmlFor="dateofbirth"
                 value="Date of Birth"
                 className="text-white"
               />
               <input
-                id="dob"
+                id="dateofbirth"
                 type="date"
                 placeholder="Enter date of birth"
-                value={dob}
-                onChange={(event) => setDob(event.target.value)}
+                value={formData.dateofbirth}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md"
               />
@@ -134,16 +170,16 @@ const Modalform = ({ onOpen, close }) => {
 
             <div>
               <Label
-                htmlFor="startTiming"
+                htmlFor="Starttime"
                 value="Shift Start Timing"
                 className="text-white"
               />
               <input
-                id="startTiming"
+                id="Starttime"
                 type="time"
                 placeholder="Enter start timing"
-                value={startTiming}
-                onChange={(event) => setStartTiming(event.target.value)}
+                value={formData.Starttime}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md"
               />
@@ -151,40 +187,40 @@ const Modalform = ({ onOpen, close }) => {
 
             <div>
               <Label
-                htmlFor="endTiming"
+                htmlFor="Endtime"
                 value="Shift End Timing"
                 className="text-white"
               />
               <input
-                id="endTiming"
+                id="Endtime"
                 type="time"
                 placeholder="Enter end timing"
-                value={endTiming}
-                onChange={(event) => setEndTiming(event.target.value)}
+                value={formData.Endtime}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md"
               />
             </div>
 
             <div>
-              <Label htmlFor="address" value="Address" />
+              <Label htmlFor="Address" value="Address" className="text-white" />
               <input
-                id="address"
+                id="Address"
                 placeholder="Enter address"
-                value={address}
-                onChange={(event) => setAddress(event.target.value)}
+                value={formData.Address}
+                onChange={handleChange}
                 required
                 className="bg-input h-12 w-96 p-3 rounded-md"
               />
             </div>
           </div>
           <div>
-            <Label htmlFor="additionalDetails" value="Additional Details" />
+            <Label htmlFor="Details" value="Additional Details" />
             <input
-              id="additionalDetails"
+              id="Details"
               placeholder="Enter additional details"
-              value={additionalDetails}
-              onChange={(event) => setAdditionalDetails(event.target.value)}
+              value={formData.Details}
+              onChange={handleChange}
               required
               className="bg-input h-20 w-full p-3 rounded-md"
             />

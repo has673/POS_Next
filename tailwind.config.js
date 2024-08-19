@@ -29,6 +29,7 @@ module.exports = {
         card1: "30vw",
         modal: "30vw",
         nav: "10vw",
+        card: "750px",
       },
     },
   },
