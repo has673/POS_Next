@@ -31,7 +31,7 @@ const EmployeeTable = ({ data, onRemove }) => {
   };
   return (
     <div className="overflow-x-auto bg-gray-800 border border-gray-600 shadow-md rounded-md">
-      <table className="min-w-full bg-gray-900 text-white cursor-pointer">
+      <table className="min-w-full bg-bg text-white cursor-pointer">
         <thead className="bg-gray-700 border-b border-gray-600">
           <tr>
             <th className="py-2 px-4 border-r">ID</th>

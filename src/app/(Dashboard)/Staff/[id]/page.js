@@ -24,9 +24,11 @@ const Page = async ({ params }) => {
 
   return (
     <div className="bg-black w-full text-white min-h-screen flex flex-col items-center">
-      <Heading text={name} className="mt-8" />
+      <div className="mt-4 text-start  ">
+        <Heading text={name} />
+      </div>
 
-      <h2 className="text-xl font-semibold mt-4">Employee Personal Details</h2>
+      <h2 className="text-xl font-semibold mt-4">Employee Details</h2>
       <div className="mt-8 bg-bg rounded-lg w-full max-w-4xl p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -49,14 +51,10 @@ const Page = async ({ params }) => {
                 : "N/A"}
             </p>
           </div>
-          <div className="col-span-2">
+          <div>
             <Label className="text-pink-500">Address:</Label>
             <p className="text-white">{employee?.Address || "N/A"}</p>
           </div>
-        </div>
-      </div>
-      <div className="mt-8 bg-bg rounded-lg w-full max-w-4xl p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <Label className="text-pink-500">Role:</Label>
             <p className="text-white">{employee?.role || "N/A"}</p>
@@ -65,7 +63,6 @@ const Page = async ({ params }) => {
             <Label className="text-pink-500">Salary:</Label>
             <p className="text-white">{employee?.salary || "N/A"}</p>
           </div>
-
           <div>
             <Label className="text-pink-500">Shift start:</Label>
             <p className="text-white">
