@@ -1,10 +1,13 @@
 "use client";
 
 import Subheading from "@/app/Components/Subheading";
+import Button from "@/app/Components/Button";
 import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
 import Loading from "../Loading";
 import dynamic from "next/dynamic";
+import { Modal, Label, TextInput, Checkbox } from "flowbite-react";
+import Modalform from "@/app/Components/Modalform";
 
 // Dynamic import
 const EmployeeTable = dynamic(() => import("../../Components/EmployeeTable"), {
@@ -14,6 +17,12 @@ const EmployeeTable = dynamic(() => import("../../Components/EmployeeTable"), {
 const Page = () => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [modalPlacement, setModalPlacement] = useState("top-right");
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   // Fetch data when component mounts
   useEffect(() => {
@@ -46,11 +55,23 @@ const Page = () => {
 
   return (
     <div className="p-4 bg-black w-full text-white">
-      <Subheading title="Staff Management" />
+      <div>
+        <Subheading title="Staff Management" />
+      </div>
+
       <Suspense fallback={<Loading />}>
-        <h3 className="font-medium text-2xl leading-9 ml-4 mt-6">
-          Staff ({count})
-        </h3>
+        <div className="flex justify-between items-center mt-4">
+          <div>
+            <h3 className="font-medium text-2xl leading-9 ml-3">
+              Staff ({count})
+            </h3>
+          </div>
+          <div className="mr-5">
+            <Button title="Add Staff" onClick={openModal} />
+          </div>
+        </div>
+        <Modalform onOpen={isModalOpen} close={closeModal} />
+
         <div className="flex justify-center items-center mt-6">
           <div className="w-full max-w-6xl">
             <EmployeeTable data={data} onRemove={remove} />

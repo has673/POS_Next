@@ -1,9 +1,11 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 
 // Custom Table component with pagination
 const EmployeeTable = ({ data, onRemove }) => {
+  const route = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
@@ -21,13 +23,16 @@ const EmployeeTable = ({ data, onRemove }) => {
   };
 
   if (!currentData || currentData.length === 0) {
-    return <p>No data available.</p>;
+    return <p className="text-white">No data available.</p>;
   }
 
+  const navigate = (id) => {
+    route.push(`Staff/${id}`);
+  };
   return (
-    <div className="overflow-x-auto bg-white border border-gray-200 shadow-md rounded-md ">
-      <table className="min-w-full bg-gray-300">
-        <thead className="bg-gray-100 border-b">
+    <div className="overflow-x-auto bg-gray-800 border border-gray-600 shadow-md rounded-md">
+      <table className="min-w-full bg-gray-900 text-white cursor-pointer">
+        <thead className="bg-gray-700 border-b border-gray-600">
           <tr>
             <th className="py-2 px-4 border-r">ID</th>
             <th className="py-2 px-4 border-r">Name</th>
@@ -39,7 +44,11 @@ const EmployeeTable = ({ data, onRemove }) => {
         </thead>
         <tbody>
           {currentData.map((employee) => (
-            <tr key={employee.id}>
+            <tr
+              onClick={navigate(employee.id)}
+              key={employee.id}
+              className="bg-gray-800 border-b border-gray-600"
+            >
               <td className="py-2 px-4 border-r">{employee.id}</td>
               <td className="py-2 px-4 border-r">{employee.Name}</td>
               <td className="py-2 px-4 border-r">{employee.email}</td>
@@ -49,13 +58,13 @@ const EmployeeTable = ({ data, onRemove }) => {
               </td>
               <td className="py-2 px-4 border-r">{employee.phoneNumber}</td>
 
-              <td className="py-2 px-4 border-r">
+              <td className="py-2 px-4">
                 <button
                   onClick={() => {
                     onRemove(employee.id);
                   }}
+                  className="text-red-400 hover:text-red-300"
                 >
-                  {" "}
                   <MdDelete />
                 </button>
               </td>
@@ -64,28 +73,31 @@ const EmployeeTable = ({ data, onRemove }) => {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="7" className="py-2 px-4 border-r">
+            <td
+              colSpan="6"
+              className="py-2 px-4 border-r bg-gray-700 text-white"
+            >
               Total Employees
             </td>
-            <td className="py-2 px-4">{data.length}</td>
+            <td className="py-2 px-4 bg-gray-700 text-white">{data.length}</td>
           </tr>
         </tfoot>
       </table>
 
       {/* Pagination Controls */}
-      <div className="flex justify-between items-center mt-4 p-2">
+      <div className="flex justify-between items-center mt-4 p-2 bg-gray-700 rounded-b-md">
         <button
-          className="px-4 py-2 bg-gray-200 rounded"
+          className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-500"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
           Previous
         </button>
-        <span>
+        <span className="text-white">
           Page {currentPage} of {totalPages}
         </span>
         <button
-          className="px-4 py-2 bg-gray-200 rounded"
+          className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-500"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
         >

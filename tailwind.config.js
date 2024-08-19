@@ -12,27 +12,26 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      colors:{
-        pink:'#FAC1D9',
-        bg:'#292C2D',
-        text:  '#64748B',
-        text1:"#475569",
-        input:"#3D4142",
-        placeholderColor: '#777979'
-
-
+      colors: {
+        pink: "#FAC1D9",
+        bg: "#292C2D",
+        text: "#64748B",
+        text1: "#475569",
+        input: "#3D4142",
+        placeholderColor: "#777979",
       },
-      height:{
-        card:'50vh',
-        nav:'100vh'
+      height: {
+        card: "50vh",
+        nav: "100vh",
+        modal: "100vh",
       },
-      width:{
-        card1:'30vw',
-        nav:'10vw'
-      }
-
+      width: {
+        card1: "30vw",
+        modal: "30vw",
+        nav: "10vw",
+        card: "750px",
+      },
     },
-
   },
   plugins: [],
 };
