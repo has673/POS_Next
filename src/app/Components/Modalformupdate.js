@@ -1,9 +1,10 @@
 import { Modal, Label } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import Button from "./Button";
 import axios from "axios";
 
-const Modalform = ({ onOpen, close }) => {
+const Modalformupdate = ({ onOpen, close, employee }) => {
   const [formData, setFormData] = useState({
     Name: "",
     email: "",
@@ -16,6 +17,11 @@ const Modalform = ({ onOpen, close }) => {
     Address: "",
     Details: "",
   });
+  useEffect(() => {
+    if (employee) {
+      setFormData(employee);
+    }
+  }, [employee]);
 
   const [modalPlacement] = useState("top-right");
 
@@ -40,7 +46,7 @@ const Modalform = ({ onOpen, close }) => {
     };
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         "http://localhost:4000/employees",
         formattedData
       );
@@ -78,7 +84,7 @@ const Modalform = ({ onOpen, close }) => {
       <Modal.Body className="bg-bg">
         <div className="space-y-6">
           <h3 className="text-xl font-medium text-white text-center dark:text-white">
-            Add New Staff
+            Update Staff
           </h3>
 
           <div className="grid grid-cols-2 gap-4">
@@ -230,4 +236,4 @@ const Modalform = ({ onOpen, close }) => {
   );
 };
 
-export default Modalform;
+export default Modalformupdate;
