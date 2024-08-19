@@ -46,8 +46,8 @@ const Modalformupdate = ({ onOpen, close, employee }) => {
     };
 
     try {
-      const response = await axios.put(
-        "http://localhost:4000/employees",
+      const response = await axios.patch(
+        `http://localhost:4000/employees/${employee.id}`,
         formattedData
       );
       console.log(response.data);
