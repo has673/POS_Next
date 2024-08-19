@@ -5,7 +5,7 @@ const Button = ({ title, onClick }) => {
     <button
       id="button"
       onClick={onClick}
-      className="bg-pink rounded-xs h-8  w-24  text-black"
+      className="bg-pink rounded-md h-8  w-24  text-black"
     >
       {title}
     </button>

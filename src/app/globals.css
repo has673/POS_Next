@@ -2,28 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @layer components {
   #button:hover {
     @apply bg-input text-white;
   }
 
-  #tab:hover{
+  #tab:hover {
     @apply bg-pink text-black;
   }
-  
-  #text:hover{
-    @apply bg-pink text-black;
-  }
-   #box{
-    @apply bg-black min-h-screen
 
-   }
+  #text:hover {
+    @apply bg-pink text-black;
+  }
+  #box {
+    @apply bg-black min-h-screen;
+  }
 }
- 
-*{
 
+* {
   margin: 0;
   padding: 0;
-} 
+}
