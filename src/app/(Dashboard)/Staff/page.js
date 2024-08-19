@@ -6,7 +6,6 @@ import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
 import Loading from "../Loading";
 import dynamic from "next/dynamic";
-import { Modal, Label, TextInput, Checkbox } from "flowbite-react";
 import Modalform from "@/app/Components/Modalform";
 
 // Dynamic import
@@ -18,18 +17,16 @@ const Page = () => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [modalPlacement, setModalPlacement] = useState("top-right");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  // Fetch data when component mounts
+  // Fetch data when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/employees");
-        const result = await response.json();
+        const response = await axios.get("http://localhost:4000/employees");
+        const result = response.data;
         setData(result);
         setCount(result.length);
       } catch (error) {
@@ -44,8 +41,6 @@ const Page = () => {
   const remove = async (id) => {
     try {
       await axios.delete(`http://localhost:4000/employees/${id}`);
-      console.log("Deleted");
-      // Update data and count after successful deletion
       setData((prevData) => prevData.filter((item) => item.id !== id));
       setCount((prevCount) => prevCount - 1);
     } catch (error) {
@@ -61,15 +56,12 @@ const Page = () => {
 
       <Suspense fallback={<Loading />}>
         <div className="flex justify-between items-center mt-4">
-          <div>
-            <h3 className="font-medium text-2xl leading-9 ml-3">
-              Staff ({count})
-            </h3>
-          </div>
-          <div className="mr-5">
-            <Button title="Add Staff" onClick={openModal} />
-          </div>
+          <h3 className="font-medium text-2xl leading-9 ml-3">
+            Staff ({count})
+          </h3>
+          <Button title="Add Staff" onClick={openModal} className="mr-5" />
         </div>
+
         <Modalform onOpen={isModalOpen} close={closeModal} />
 
         <div className="flex justify-center items-center mt-6">
