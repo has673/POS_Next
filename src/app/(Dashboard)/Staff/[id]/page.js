@@ -1,5 +1,6 @@
 import Heading from "@/app/Components/Heading";
 import { Label } from "flowbite-react";
+import Image from "next/image";
 import React from "react";
 
 const Page = async ({ params }) => {
@@ -24,6 +25,7 @@ const Page = async ({ params }) => {
   return (
     <div className="bg-black w-full text-white min-h-screen flex flex-col items-center">
       <Heading text={name} className="mt-8" />
+
       <h2 className="text-xl font-semibold mt-4">Employee Personal Details</h2>
       <div className="mt-8 bg-bg rounded-lg w-full max-w-4xl p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -53,7 +55,6 @@ const Page = async ({ params }) => {
           </div>
         </div>
       </div>
-
       <div className="mt-8 bg-bg rounded-lg w-full max-w-4xl p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
