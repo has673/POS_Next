@@ -11,6 +11,9 @@
     @apply bg-pink text-black;
   }
 
+  #card:hover {
+    @apply bg-pink text-black;
+  }
   #text:hover {
     @apply bg-pink text-black;
   }

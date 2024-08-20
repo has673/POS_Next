@@ -26,6 +26,7 @@ module.exports = {
         nav: "100vh",
         modal: "100vh",
         popup: "1200px",
+        catCard: "12vh",
       },
       width: {
         card1: "30vw",
@@ -33,6 +34,7 @@ module.exports = {
         nav: "10vw",
         card: "750px",
         popup: "640px",
+        catCard: "10vw",
       },
     },
   },

@@ -7,6 +7,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import Loading from "../Loading";
 import dynamic from "next/dynamic";
 import Modalform from "@/app/Components/Modalform";
+import { Spin } from "antd";
 
 // Dynamic import
 const EmployeeTable = dynamic(() => import("../../Components/EmployeeTable"), {
