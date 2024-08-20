@@ -13,6 +13,7 @@
     "@mui/icons-material": "^5.16.7",
     "@mui/material-nextjs": "^5.16.6",
     "@nextui-org/table": "^2.0.39",
+    "antd": "^5.20.2",
     "axios": "^1.7.4",
     "cors": "^2.8.5",
     "flowbite-react": "^0.10.1",
