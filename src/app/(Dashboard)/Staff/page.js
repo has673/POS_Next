@@ -17,6 +17,7 @@ const EmployeeTable = dynamic(() => import("../../Components/EmployeeTable"), {
 const Page = () => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -26,12 +27,15 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get("http://localhost:4000/employees");
         const result = response.data;
         setData(result);
         setCount(result.length);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -55,7 +59,7 @@ const Page = () => {
         <Subheading title="Staff Management" />
       </div>
 
-      <Suspense fallback={<Loading />}>
+      <Spin spinning={loading}>
         <div className="flex justify-between items-center mt-4">
           <h3 className="font-medium text-2xl leading-9 ml-3">
             Staff ({count})
@@ -70,7 +74,7 @@ const Page = () => {
             <EmployeeTable data={data} onRemove={remove} />
           </div>
         </div>
-      </Suspense>
+      </Spin>
     </div>
   );
 };
