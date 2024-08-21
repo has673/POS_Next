@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Label } from "flowbite-react";
 import Button from "./Button";
+import axios from "axios";
 
 const EditModal = ({ onOpen, onClose, item }) => {
   const [edititemData, setEditItemData] = useState({
@@ -32,8 +33,13 @@ const EditModal = ({ onOpen, onClose, item }) => {
       console.log(`the item data: ${edititemData}`);
     }
   }, [item]);
-  const handleItemSubmit = () => {
-    console.log("edit");
+  const handleItemSubmit = async () => {
+    try {
+      const res = await axios.put(`http://localhost:4000/items${item.id}`);
+      console.log("edit");
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <Modal
