@@ -156,7 +156,7 @@ const Page = () => {
     try {
       const res = axios.delete(`http://localhost:4000/items/${id}`);
       console.log(res.data);
-      fetchCategories();
+      getitems();
     } catch (err) {
       console.log(err);
     }
@@ -203,6 +203,89 @@ const Page = () => {
       });
       getitems();
       closeitemModal();
+    } catch (err) {
+      if (err.response) {
+        console.error("Error response:", err.response.data);
+      } else if (err.request) {
+        console.error("Error request:", err.request);
+      } else {
+        console.error("Error:", err.message);
+      }
+    }
+  };
+
+  const [edititemData, setEditItemData] = useState({
+    photo: "",
+    name: "",
+    price: 0,
+    availability: "",
+    category: "",
+    description: "",
+  });
+
+  const handleEditItemChange = (e) => {
+    const { id, value } = e.target;
+    setEditItemData({ ...edititemData, [id]: value });
+  };
+
+  useEffect(() => {
+    if (selectedItem) {
+      setEditItemData({
+        photo: selectedItem.photo || "",
+        name: selectedItem.name || "",
+        price: selectedItem.price || 0,
+        availability: selectedItem.availability || "",
+        category: selectedItem.category || "",
+        description: selectedItem.description || "",
+      });
+
+      console.log(`the item data: ${edititemData}`);
+    }
+  }, [selectedItem]);
+
+  const editSubmit = async (e) => {
+    console.log(selectedItem.id);
+    console.log("item");
+    e.preventDefault();
+
+    try {
+      const edititemDataToSend = new FormData();
+      if (photo) {
+        edititemDataToSend.append("file", photo);
+      }
+      console.log("update",itemData.price);
+      const item = edititemData.price;
+      console.log(typeof item);
+      edititemDataToSend.append("name", edititemData.name);
+      edititemDataToSend.append("price", parseInt(item));
+      edititemDataToSend.append("description", edititemData.description);
+      edititemDataToSend.append("availability", edititemData.availability);
+      edititemDataToSend.append("categoryId", edititemData.category);
+      console.log("Data Object : ", edititemDataToSend);
+      console.log("ITEM DATA: ", edititemData);
+      const response = await axios.patch(
+        `http://localhost:4000/items/${selectedItem.id}`,
+        edititemDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response.data);
+      getitems();
+
+      setEditItemData({
+        photo: "",
+        name: "",
+        price: 0,
+        availability: "",
+        category: "",
+        description: "",
+      });
+
+      closeeditModal();
     } catch (err) {
       if (err.response) {
         console.error("Error response:", err.response.data);
@@ -523,11 +606,112 @@ const Page = () => {
           <p className="text-white">No items available</p>
         )}
       </Spin>{" "}
-      <EditModal
-        onOpen={iseditModalOpen}
+      <Modal
+        show={iseditModalOpen}
+        dismissible
+        size="md"
         onClose={closeeditModal}
-        item={selectedItem}
-      />
+        position="center"
+        className="w-popup h-2/3 bg-bg"
+      >
+        <Modal.Header closeButton={true} className="bg-bg" />
+        <Modal.Body className="bg-bg">
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-white text-center dark:text-white">
+              Edit New Item
+            </h3>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="name" value="Name" className="text-white" />
+                <input
+                  id="name"
+                  placeholder="Enter name"
+                  value={edititemData.name}
+                  onChange={handleEditItemChange}
+                  required
+                  className="bg-input h-12 p-3 rounded-md w-full text-white"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="Price" value="Price" className="text-white" />
+                <input
+                  id="price"
+                  placeholder="Enter Price"
+                  value={edititemData.price}
+                  onChange={handleEditItemChange}
+                  required
+                  type="number"
+                  className="bg-input h-12 p-3 rounded-md w-full"
+                />
+              </div>
+
+              <div className="col-span-2">
+                <Label
+                  htmlFor="description"
+                  value="Description"
+                  className="text-white"
+                />
+                <textarea
+                  id="description"
+                  placeholder="Enter description"
+                  value={edititemData.description}
+                  onChange={handleEditItemChange}
+                  required
+                  className="bg-input h-auto p-3 rounded-md w-full"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label
+                  htmlFor="menu"
+                  value="Availabilty"
+                  className="text-white"
+                />
+                <select
+                  id="`availability"
+                  placeholder="Select Availabilty"
+                  value={edititemData.availability}
+                  onChange={handleEditItemChange}
+                  required
+                  className="bg-input h-12 p-3 rounded-md w-full"
+                >
+                  <option value="">Select availabilty</option>
+                  <option value="IN_STOCK">In Stock</option>
+                  <option value="OUT_OF_STOCK">Out of Stock</option>
+                </select>
+              </div>
+              <div className="col-span-2">
+                <Label
+                  htmlFor="category"
+                  value="Category"
+                  className="text-white"
+                />
+                <select
+                  id="category"
+                  placeholder="Select Category"
+                  value={edititemData.category} // Assuming you want to store the selected category in itemData.category
+                  onChange={handleEditItemChange}
+                  required
+                  className="bg-input h-12 p-3 rounded-md w-full"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}{" "}
+                      {/* Assuming each category has a name property */}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-center">
+              <Button title="Update" onClick={editSubmit} />
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
