@@ -20,7 +20,16 @@ const EditModal = ({ onOpen, onClose, item }) => {
 
   useEffect(() => {
     if (item) {
-      setEditItemData(item);
+      setEditItemData({
+        photo: item.photo || "",
+        name: item.name || "",
+        price: item.price || 0,
+        availability: item.availability || "",
+        category: item.category || "",
+        description: item.description || "",
+      });
+
+      console.log(`the item data: ${edititemData}`);
     }
   }, [item]);
   const handleItemSubmit = () => {

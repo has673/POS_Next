@@ -12,7 +12,6 @@ import EditModal from "@/app/Components/EditModal";
 
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [count, SetCount] = useState(0);
   const [isitemModalOpen, setIsItemModalOpen] = useState(false);
   const [iseditModalOpen, setIsEditModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -36,25 +35,20 @@ const Page = () => {
     description: "",
   });
 
-  const [edititemData, setEditItemData] = useState({
-    photo: "",
-    name: "",
-    price: 0,
-    availability: "",
-    category: "",
-    description: "",
-  });
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const openitemModal = () => setIsEditModalOpen(true);
-  const closeitemModal = () => setIsEditModalOpen(false);
+  const openitemModal = () => setIsItemModalOpen(true);
+  const closeitemModal = () => setIsItemModalOpen(false);
 
   const openeditModal = (item) => {
     setSelectedItem(item);
     setIsEditModalOpen(true);
   };
-  const closeeditModal = () => setIsEditModalOpen(false);
+  const closeeditModal = () => {
+    setSelectedItem(null);
+    setIsEditModalOpen(false);
+  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -119,7 +113,6 @@ const Page = () => {
       const result = await axios.get("http://localhost:4000/categories");
       setCategories(result.data);
       console.log(result);
-      SetCount(result.menuItems.length);
     } catch (err) {
       console.log(err);
     } finally {
@@ -218,7 +211,7 @@ const Page = () => {
         {" "}
         <div className="mt-6 flex justify-center gap-8">
           {categories.map((category) => (
-            <CategoryCard key={category.id} category={category} count={count} />
+            <CategoryCard key={category.id} category={category} />
           ))}
         </div>
       </Spin>
@@ -228,7 +221,7 @@ const Page = () => {
         size="md"
         onClose={closeModal}
         position="center"
-        className="w-popup h-1/2 bg-bg"
+        className="w-popup h-full bg-bg"
       >
         <Modal.Header closeButton={true} className="bg-bg" />
         <Modal.Body className="bg-bg">
@@ -237,7 +230,7 @@ const Page = () => {
               Add New Category
             </h3>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="mb-4">
                 <label
                   htmlFor="photo"
@@ -491,7 +484,7 @@ const Page = () => {
       <EditModal
         onOpen={iseditModalOpen}
         onClose={closeeditModal}
-        item={setSelectedItem}
+        item={selectedItem}
       />
     </div>
   );
