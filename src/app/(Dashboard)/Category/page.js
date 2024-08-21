@@ -141,7 +141,7 @@ const Page = () => {
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(items.length / itemsPerPage);
-  console.log(items.length);
+  // console.log(items.length);
   // Slice the data to display only the items for the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -176,8 +176,10 @@ const Page = () => {
       itemDataToSend.append("price", parseInt(item));
       itemDataToSend.append("description", itemData.description);
       itemDataToSend.append("availability", itemData.availability);
-      itemDataToSend.append("category", itemData.category);
-      console.log(typeof itemDataToSend.price);
+      itemDataToSend.append("categoryId", itemData.category);
+      console.log("PRICE : ", typeof itemDataToSend.price);
+      console.log("Data Object : ", itemDataToSend);
+      console.log("ITEM DATA: ", itemData);
       const response = await axios.post(
         "http://localhost:4000/items",
         itemDataToSend,
@@ -194,7 +196,7 @@ const Page = () => {
         photo: "",
         name: "",
         price: 0,
-        availabilty: "",
+        availability: "",
         category: "",
         description: "",
       });
@@ -387,9 +389,9 @@ const Page = () => {
                   className="text-white"
                 />
                 <select
-                  id="`availability"
+                  id="availability"
                   placeholder="Select Availabilty"
-                  value={itemData.availabilty}
+                  value={itemData.availability}
                   onChange={handleItemChange}
                   required
                   className="bg-input h-12 p-3 rounded-md w-full"
