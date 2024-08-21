@@ -6,9 +6,12 @@ import { Modal, Label } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Spin, Table } from "antd";
+import { MdDelete } from "react-icons/md";
+import { LuPencil } from "react-icons/lu";
 
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [count, SetCount] = useState(0);
   const [isitemModalOpen, setIsItemModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
@@ -98,6 +101,8 @@ const Page = () => {
       setLoading(true);
       const result = await axios.get("http://localhost:4000/categories");
       setCategories(result.data);
+      console.log(result);
+      SetCount(result.menuItems.length);
     } catch (err) {
       console.log(err);
     } finally {
@@ -121,6 +126,14 @@ const Page = () => {
     getitems();
   }, []);
 
+  const onRemove = async (id) => {
+    try {
+      const res = axios.delete(`http://localhost:3000/items/${id}`);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleItemSubmit = async (e) => {
     console.log("item");
     e.preventDefault();
@@ -188,7 +201,7 @@ const Page = () => {
         {" "}
         <div className="mt-6 flex justify-center gap-8">
           {categories.map((category) => (
-            <CategoryCard key={category.id} category={category} />
+            <CategoryCard key={category.id} category={category} count={count} />
           ))}
         </div>
       </Spin>
@@ -393,9 +406,70 @@ const Page = () => {
         </Modal.Body>
       </Modal>
       <Spin spinning={loadingItem}>
-        {items.map((item) => {
-          <p className="text-white">{item.description}</p>;
-        })}
+        {items.length > 0 ? (
+          <div className="relative">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-lg mt-6">
+              <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">
+                    Product Name
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Price
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Availability
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Category
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item) => (
+                  <tr
+                    key={item.id} // Make sure each item has a unique id
+                    className="bg-bg border-b text-white dark:bg-gray-800 dark:border-gray-700"
+                  >
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white"
+                    >
+                      {item.name}
+                    </th>
+                    <td className="px-6 py-4">{item.price}</td>
+                    <td className="px-6 py-4">
+                      {item.availability === "IN_STOCK"
+                        ? "In Stock"
+                        : "Out of Stock"}
+                    </td>
+                    <td className="px-6 py-4">Category</td>
+                    <td className="py-2 px-4">
+                      <button
+                        onClick={() => {
+                          onRemove(item.id);
+                        }}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <MdDelete />
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleEdit(employee);
+                        }}
+                        className="text-white hover:text-red-300 ml-5"
+                      >
+                        <LuPencil />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-white">No items available</p>
+        )}
       </Spin>{" "}
     </div>
   );

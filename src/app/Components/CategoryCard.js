@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 const CategoryCard = ({ category }) => {
+  const menuItemCount = category.MenuItem ? category.MenuItem.length : 0;
   return (
     <div
       id="card"
@@ -18,7 +19,7 @@ const CategoryCard = ({ category }) => {
       </div>
 
       <p>{category.name}</p>
-      <p>items</p>
+      <p>{`${menuItemCount} items`}</p>
     </div>
   );
 };
