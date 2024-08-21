@@ -8,16 +8,19 @@ import axios from "axios";
 import { Spin, Table } from "antd";
 import { MdDelete } from "react-icons/md";
 import { LuPencil } from "react-icons/lu";
+import EditModal from "@/app/Components/EditModal";
 
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [count, SetCount] = useState(0);
   const [isitemModalOpen, setIsItemModalOpen] = useState(false);
+  const [iseditModalOpen, setIsEditModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingItem, setLoadingItem] = useState(false);
   const [photo, setPhoto] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [formData, setFormData] = useState({
     icon: "",
     name: "",
@@ -33,11 +36,25 @@ const Page = () => {
     description: "",
   });
 
+  const [edititemData, setEditItemData] = useState({
+    photo: "",
+    name: "",
+    price: 0,
+    availability: "",
+    category: "",
+    description: "",
+  });
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const openitemModal = () => setIsItemModalOpen(true);
-  const closeitemModal = () => setIsItemModalOpen(false);
+  const openitemModal = () => setIsEditModalOpen(true);
+  const closeitemModal = () => setIsEditModalOpen(false);
+
+  const openeditModal = (item) => {
+    setSelectedItem(item);
+    setIsEditModalOpen(true);
+  };
+  const closeeditModal = () => setIsEditModalOpen(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -128,7 +145,7 @@ const Page = () => {
 
   const onRemove = async (id) => {
     try {
-      const res = axios.delete(`http://localhost:3000/items/${id}`);
+      const res = axios.delete(`http://localhost:4000/items/${id}`);
       console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -172,7 +189,7 @@ const Page = () => {
         category: "",
         description: "",
       });
-
+      getitems();
       closeitemModal();
     } catch (err) {
       if (err.response) {
@@ -455,7 +472,7 @@ const Page = () => {
                       </button>
                       <button
                         onClick={() => {
-                          handleEdit(employee);
+                          openeditModal(item);
                         }}
                         className="text-white hover:text-red-300 ml-5"
                       >
@@ -471,6 +488,11 @@ const Page = () => {
           <p className="text-white">No items available</p>
         )}
       </Spin>{" "}
+      <EditModal
+        onOpen={iseditModalOpen}
+        onClose={closeeditModal}
+        item={setSelectedItem}
+      />
     </div>
   );
 };
