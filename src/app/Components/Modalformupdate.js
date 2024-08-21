@@ -19,10 +19,20 @@ const Modalformupdate = ({ onOpen, close, employee }) => {
   });
   useEffect(() => {
     if (employee) {
-      setFormData(employee);
+      setFormData({
+        Name: employee.Name || "",
+        email: employee.email || "",
+        role: employee.role || "",
+        Phonenumber: employee.Phonenumber || "",
+        salary: employee.salary || "",
+        dateofbirth: employee.dateofbirth || "",
+        Starttime: employee.Starttime || "",
+        Endtime: employee.Endtime || "",
+        Address: employee.Address || "",
+        Details: employee.Details || "",
+      });
     }
   }, [employee]);
-
   const [modalPlacement] = useState("top-right");
 
   const handleChange = (e) => {
