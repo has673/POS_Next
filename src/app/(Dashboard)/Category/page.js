@@ -20,6 +20,7 @@ const Page = () => {
   const [loadingItem, setLoadingItem] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [formData, setFormData] = useState({
     icon: "",
     name: "",
@@ -135,6 +136,21 @@ const Page = () => {
     fetchCategories();
     getitems();
   }, []);
+
+  const itemsPerPage = 5;
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  console.log(items.length);
+  // Slice the data to display only the items for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentData = items.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const onRemove = async (id) => {
     try {
@@ -436,7 +452,7 @@ const Page = () => {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item, index) => (
+                {currentData.map((item, index) => (
                   <tr
                     key={item.id} // Make sure each item has a unique id
                     className={`border-b text-white dark:border-gray-700 ${
@@ -478,6 +494,27 @@ const Page = () => {
                 ))}
               </tbody>
             </table>
+            <div className="mt-4 flex justify-around gap-3">
+              <div>
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="bg-gray-600 text-white px-4 py-2 rounded-md mr-2"
+                >
+                  Previous
+                </button>
+                <span className="text-white">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="bg-gray-600 text-white px-4 py-2 rounded-md ml-2"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
         ) : (
           <p className="text-white">No items available</p>
