@@ -5,32 +5,55 @@ import Subheading from "@/app/Components/Subheading";
 import { Modal, Label } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Spin } from "antd";
+import { Spin, Table } from "antd";
 
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isitemModalOpen, setIsItemModalOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingItem, setLoadingItem] = useState(false);
+  const [photo, setPhoto] = useState(null);
   const [formData, setFormData] = useState({
     icon: "",
     name: "",
     menu: "",
     description: "",
   });
+  const [itemData, setItemData] = useState({
+    photo: "",
+    name: "",
+    price: 0,
+    availability: "",
+    category: "",
+    description: "",
+  });
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const openitemModal = () => setIsItemModalOpen(true);
+  const closeitemModal = () => setIsItemModalOpen(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
 
+  const handleItemChange = (e) => {
+    const { id, value } = e.target;
+    setItemData({ ...itemData, [id]: value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("icon", formData.icon);
+      if (photo) {
+        formDataToSend.append("file", photo);
+      }
+
       formDataToSend.append("name", formData.name);
       formDataToSend.append("menu", formData.menu);
       formDataToSend.append("description", formData.description);
@@ -44,6 +67,7 @@ const Page = () => {
           },
         }
       );
+
       console.log(response.data);
 
       setFormData({
@@ -54,10 +78,18 @@ const Page = () => {
       });
 
       closeModal();
-      // Optionally, refresh categories after submission
       fetchCategories();
     } catch (err) {
-      console.error(err);
+      if (err.response) {
+        // Server responded with a status other than 200 range
+        console.error("Error response:", err.response.data);
+      } else if (err.request) {
+        // Request was made but no response received
+        console.error("Error request:", err.request);
+      } else {
+        // Something else triggered the error
+        console.error("Error:", err.message);
+      }
     }
   };
 
@@ -72,10 +104,73 @@ const Page = () => {
       setLoading(false); // End loading
     }
   };
-
+  const getitems = async () => {
+    try {
+      setLoadingItem(true);
+      const res = await axios.get("http://localhost:4000/items");
+      setItems(res.data);
+      console.log(items);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingItem(false);
+    }
+  };
   useEffect(() => {
     fetchCategories();
+    getitems();
   }, []);
+
+  const handleItemSubmit = async (e) => {
+    console.log("item");
+    e.preventDefault();
+
+    try {
+      const itemDataToSend = new FormData();
+      if (photo) {
+        itemDataToSend.append("file", photo);
+      }
+      console.log(itemData.price);
+      const item = itemData.price;
+      console.log(typeof item);
+      itemDataToSend.append("name", itemData.name);
+      itemDataToSend.append("price", parseInt(item));
+      itemDataToSend.append("description", itemData.description);
+      itemDataToSend.append("availability", itemData.availability);
+      itemDataToSend.append("category", itemData.category);
+      console.log(typeof itemDataToSend.price);
+      const response = await axios.post(
+        "http://localhost:4000/items",
+        itemDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      setItemData({
+        photo: "",
+        name: "",
+        price: 0,
+        availabilty: "",
+        category: "",
+        description: "",
+      });
+
+      closeitemModal();
+    } catch (err) {
+      if (err.response) {
+        console.error("Error response:", err.response.data);
+      } else if (err.request) {
+        console.error("Error request:", err.request);
+      } else {
+        console.error("Error:", err.message);
+      }
+    }
+  };
 
   return (
     <div className="text-white bg-black w-full p-4">
@@ -91,13 +186,12 @@ const Page = () => {
       </div>
       <Spin spinning={loading} size="loading" indicator="green">
         {" "}
-        <div className="mt-6 flex justify-center gap-3">
+        <div className="mt-6 flex justify-center gap-8">
           {categories.map((category) => (
             <CategoryCard key={category.id} category={category} />
           ))}
         </div>
       </Spin>
-
       <Modal
         show={isModalOpen}
         dismissible
@@ -113,18 +207,20 @@ const Page = () => {
               Add New Category
             </h3>
 
-            <div className="grid grid-cols-1 gap-4">
-              <div>
-                <Label htmlFor="icon" value="Icon" className="text-white" />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="mb-4">
+                <label
+                  htmlFor="photo"
+                  className="block text-white font-semibold mb-2"
+                >
+                  Icon
+                </label>
                 <input
-                  id="icon"
-                  placeholder="Select an icon"
-                  onChange={(e) =>
-                    setFormData({ ...formData, icon: e.target.files[0] })
-                  }
-                  required
                   type="file"
-                  className="bg-input h-20 w-auto p-3 rounded-md"
+                  id="icon"
+                  onChange={(e) => setPhoto(e.target.files[0])}
+                  accept="image/*"
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                 />
               </div>
               <div>
@@ -166,7 +262,9 @@ const Page = () => {
                 >
                   <option value="">Select menu</option>
                   <option value="NORMAL">Normal</option>
-                  <option value="STAFF">Staff</option>
+                  <option value="SPECIAL">SPECIAL</option>
+                  <option value="NEWYEAR">NEWYEAR</option>
+                  <option value="DESSERT">DESSERTS</option>
                 </select>
               </div>
             </div>
@@ -177,8 +275,129 @@ const Page = () => {
           </div>
         </Modal.Body>
       </Modal>
+      <div className="flex justify-between mt-8">
+        <Subheading title="MenuItems" />
+        <button
+          id="button"
+          className="bg-pink h-15 w-auto p-2 rounded-sm text-black mr-6"
+          onClick={openitemModal}
+        >
+          Add New Item
+        </button>
+      </div>
+      <Modal
+        show={isitemModalOpen}
+        dismissible
+        size="md"
+        onClose={closeitemModal}
+        position="center"
+        className="w-popup h-2/3 bg-bg"
+      >
+        <Modal.Header closeButton={true} className="bg-bg" />
+        <Modal.Body className="bg-bg">
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-white text-center dark:text-white">
+              Add New Item
+            </h3>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="name" value="Name" className="text-white" />
+                <input
+                  id="name"
+                  placeholder="Enter name"
+                  value={itemData.name}
+                  onChange={handleItemChange}
+                  required
+                  className="bg-input h-12 p-3 rounded-md w-full text-white"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="Price" value="Price" className="text-white" />
+                <input
+                  id="price"
+                  placeholder="Enter Price"
+                  value={itemData.price}
+                  onChange={handleItemChange}
+                  required
+                  type="number"
+                  className="bg-input h-12 p-3 rounded-md w-full"
+                />
+              </div>
+
+              <div className="col-span-2">
+                <Label
+                  htmlFor="description"
+                  value="Description"
+                  className="text-white"
+                />
+                <textarea
+                  id="description"
+                  placeholder="Enter description"
+                  value={itemData.description}
+                  onChange={handleItemChange}
+                  required
+                  className="bg-input h-auto p-3 rounded-md w-full"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label
+                  htmlFor="menu"
+                  value="Availabilty"
+                  className="text-white"
+                />
+                <select
+                  id="`availability"
+                  placeholder="Select Availabilty"
+                  value={itemData.availabilty}
+                  onChange={handleItemChange}
+                  required
+                  className="bg-input h-12 p-3 rounded-md w-full"
+                >
+                  <option value="">Select availabilty</option>
+                  <option value="IN_STOCK">In Stock</option>
+                  <option value="OUT_OF_STOCK">Out of Stock</option>
+                </select>
+              </div>
+
+              <div className="col-span-2">
+                <Label
+                  htmlFor="category"
+                  value="Category"
+                  className="text-white"
+                />
+                <select
+                  id="category"
+                  placeholder="Select Category"
+                  value={itemData.category} // Assuming you want to store the selected category in itemData.category
+                  onChange={handleItemChange}
+                  required
+                  className="bg-input h-12 p-3 rounded-md w-full"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}{" "}
+                      {/* Assuming each category has a name property */}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-center">
+              <Button title="Confirm" onClick={handleItemSubmit} />
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Spin spinning={loadingItem}>
+        {items.map((item) => {
+          <p className="text-white">{item.description}</p>;
+        })}
+      </Spin>{" "}
     </div>
   );
 };
-
 export default Page;
