@@ -156,6 +156,7 @@ const Page = () => {
     try {
       const res = axios.delete(`http://localhost:4000/items/${id}`);
       console.log(res.data);
+      fetchCategories();
     } catch (err) {
       console.log(err);
     }

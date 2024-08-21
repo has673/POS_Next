@@ -33,14 +33,59 @@ const EditModal = ({ onOpen, onClose, item }) => {
       console.log(`the item data: ${edititemData}`);
     }
   }, [item]);
-  const handleItemSubmit = async () => {
+  const handleItemSubmit = async (e) => {
+    console.log("item");
+    e.preventDefault();
+
     try {
-      const res = await axios.put(`http://localhost:4000/items${item.id}`);
-      console.log("edit");
+      constedititemDataToSend = new FormData();
+      if (photo) {
+        itemDataToSend.append("file", photo);
+      }
+      console.log(itemData.price);
+      const item = edititemData.price;
+      console.log(typeof item);
+      itemDataToSend.append("name", edititemData.name);
+      itemDataToSend.append("price", parseInt(item));
+      itemDataToSend.append("description", edititemData.description);
+      itemDataToSend.append("availability", edititemData.availability);
+      itemDataToSend.append("categoryId", edititemData.category);
+      console.log("PRICE : ", typeof itemDataToSend.price);
+      console.log("Data Object : ", itemDataToSend);
+      console.log("ITEM DATA: ", itemData);
+      const response = await axios.put(
+        "http://localhost:4000/items",
+        itemDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      setEditItemData({
+        photo: "",
+        name: "",
+        price: 0,
+        availability: "",
+        category: "",
+        description: "",
+      });
+      getitems();
+      closeitemModal();
     } catch (err) {
-      console.log(err);
+      if (err.response) {
+        console.error("Error response:", err.response.data);
+      } else if (err.request) {
+        console.error("Error request:", err.request);
+      } else {
+        console.error("Error:", err.message);
+      }
     }
   };
+
   return (
     <Modal
       show={onOpen}
