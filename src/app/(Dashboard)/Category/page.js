@@ -436,10 +436,12 @@ const Page = () => {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {items.map((item, index) => (
                   <tr
                     key={item.id} // Make sure each item has a unique id
-                    className="bg-bg border-b text-white dark:bg-gray-800 dark:border-gray-700"
+                    className={`border-b text-white dark:border-gray-700 ${
+                      index % 2 === 0 ? "bg-bg" : "bg-input"
+                    }`}
                   >
                     <th
                       scope="row"
