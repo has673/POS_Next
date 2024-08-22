@@ -1,12 +1,16 @@
 "use client";
+import Button from "@/app/Components/Button";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params }) => {
   const { id } = params || {};
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [reservation, setReservation] = useState(null);
   const [customerId, setCustomerId] = useState(null);
   const [customer, setCustomer] = useState(null);
+  const [selectedReservation, setSelectedReservation] = useState(null);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   // Fetch reservation by ID
   const get = async (id) => {
@@ -42,6 +46,16 @@ const Page = ({ params }) => {
       getCustomer(customerId);
     }
   }, [customerId]);
+
+  const openeditModal = (item) => {
+    setSelectedCustomer(customer);
+    setSelectedReservation(reservation);
+    setIsModalOpen(true);
+  };
+  const closeeditModal = () => {
+    setSelectedItem(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="text-white bg-black w-full">
@@ -120,6 +134,7 @@ const Page = ({ params }) => {
           </div>
         </div>
       )}
+      <Button title="Edit" />
     </div>
   );
 };
