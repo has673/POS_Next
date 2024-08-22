@@ -3,18 +3,16 @@ import React, { useEffect, useState } from "react";
 import Subheading from "../../Components/Subheading";
 import axios from "axios";
 import ReservationCard from "@/app/Components/reservationCard";
-
 import { Spin } from "antd";
 import { Label, Modal } from "flowbite-react";
 import Button from "@/app/Components/Button";
 
-const page = () => {
+const Page = () => {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [reservationData, setReservationData] = useState({
     customer: {
-      title: "",
       fullName: "",
       phoneNumber: "",
       emailAddress: "",
@@ -31,25 +29,52 @@ const page = () => {
     },
   });
   const [reservations, setReservations] = useState([]);
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
   const handleChange = (e) => {
-    const { id, value } = e;
-    setReservationData({ ...reservationData, [id]: value });
+    const { id, value } = e.target;
+    const [parent, child] = id.split(".");
+    if (parent === "reservation" || parent === "customer") {
+      setReservationData({
+        ...reservationData,
+        [parent]: {
+          ...reservationData[parent],
+          [child]: value,
+        },
+      });
+    } else {
+      setReservationData({
+        ...reservationData,
+        [id]: value,
+      });
+    }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      const parsedData = {
+        ...reservationData,
+        reservation: {
+          tableNumber: Number(reservationData.reservation.tableNumber),
+          floor: Number(reservationData.reservation.floor),
+        },
+      };
+
       const res = await axios.post(
         "http://localhost:4000/reservaton",
-        reservationData
+        parsedData
       );
       console.log(res.data);
     } catch (err) {
       console.log(err);
     }
   };
-  const getReservtion = async () => {
+
+  const getReservations = async () => {
     try {
       setLoading(true);
       const response = await axios.get("http://localhost:4000/reservaton");
@@ -61,9 +86,11 @@ const page = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
-    getReservtion();
+    getReservations();
   }, []);
+
   return (
     <div className="bg-black w-full text-white p-4">
       <div className="flex justify-between">
@@ -93,9 +120,13 @@ const page = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="table" value="Table" className="text-white" />
+                <Label
+                  htmlFor="reservation.tableNumber"
+                  value="Table"
+                  className="text-white"
+                />
                 <select
-                  id="table"
+                  id="reservation.tableNumber"
                   placeholder="Select table"
                   value={reservationData.reservation.tableNumber}
                   onChange={handleChange}
@@ -111,9 +142,13 @@ const page = () => {
               </div>
 
               <div className="col-span-1">
-                <Label htmlFor="floor" value="floor" className="text-white" />
+                <Label
+                  htmlFor="reservation.floor"
+                  value="Floor"
+                  className="text-white"
+                />
                 <select
-                  id="floor"
+                  id="reservation.floor"
                   placeholder="Select floor"
                   value={reservationData.reservation.floor}
                   onChange={handleChange}
@@ -129,14 +164,14 @@ const page = () => {
               </div>
               <div>
                 <Label
-                  htmlFor="reservatonDate"
+                  htmlFor="reservation.reservationDate"
                   value="Reservation Date"
                   className="text-white"
                 />
                 <input
-                  id="reservationDate"
+                  id="reservation.reservationDate"
                   type="date"
-                  placeholder="Enter start timing"
+                  placeholder="Enter reservation date"
                   value={reservationData.reservation.reservationDate}
                   onChange={handleChange}
                   required
@@ -145,25 +180,29 @@ const page = () => {
               </div>
               <div>
                 <Label
-                  htmlFor="reservationTime"
+                  htmlFor="reservation.reservationTime"
                   value="Reservation Time"
                   className="text-white"
                 />
                 <input
-                  id="reservationtime"
+                  id="reservation.reservationTime"
                   type="time"
-                  placeholder="Enter reservation timing"
-                  value={reservationData.reservation.reservationTimeEndtime}
+                  placeholder="Enter reservation time"
+                  value={reservationData.reservation.reservationTime}
                   onChange={handleChange}
                   required
                   className="bg-input h-12 p-3 rounded-md w-full"
                 />
               </div>
               <div>
-                <Label htmlFor="Status" value="Status" className="text-white" />
+                <Label
+                  htmlFor="reservation.status"
+                  value="Status"
+                  className="text-white"
+                />
                 <input
-                  id="Status"
-                  type="number"
+                  id="reservation.status"
+                  type="string"
                   placeholder="Status"
                   value={reservationData.reservation.status}
                   onChange={handleChange}
@@ -173,12 +212,12 @@ const page = () => {
               </div>
               <div>
                 <Label
-                  htmlFor="Deposit Fee"
+                  htmlFor="reservation.depositFee"
                   value="Deposit Fee"
                   className="text-white"
                 />
                 <input
-                  id="despositFee"
+                  id="reservation.depositFee"
                   type="number"
                   placeholder="Fee"
                   value={reservationData.reservation.depositFee}
@@ -188,7 +227,7 @@ const page = () => {
                 />
               </div>
             </div>
-            <hr></hr>
+            <hr />
           </div>
           <div className="space-y-6">
             <h3 className="text-xl font-medium text-white text-center dark:text-white">
@@ -198,13 +237,13 @@ const page = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label
-                  htmlFor="Full Name"
-                  value="fullName"
+                  htmlFor="customer.fullName"
+                  value="Full Name"
                   className="text-white"
                 />
                 <input
-                  id="fullName"
-                  type="string"
+                  id="customer.fullName"
+                  type="text"
                   placeholder="Enter Full Name"
                   value={reservationData.customer.fullName}
                   onChange={handleChange}
@@ -214,14 +253,14 @@ const page = () => {
               </div>
               <div>
                 <Label
-                  htmlFor="Phone Number"
-                  value="PhoneNumber"
+                  htmlFor="customer.phoneNumber"
+                  value="Phone Number"
                   className="text-white"
                 />
                 <input
-                  id="phoneNumber"
-                  type="string"
-                  placeholder="PhoneNumber"
+                  id="customer.phoneNumber"
+                  type="text"
+                  placeholder="Phone Number"
                   value={reservationData.customer.phoneNumber}
                   onChange={handleChange}
                   required
@@ -229,12 +268,16 @@ const page = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="Pa" value="Status" className="text-white" />
+                <Label
+                  htmlFor="customer.emailAddress"
+                  value="Email Address"
+                  className="text-white"
+                />
                 <input
-                  id="Status"
-                  type="number"
-                  placeholder="Status"
-                  value={reservationData.reservation.status}
+                  id="customer.emailAddress"
+                  type="email"
+                  placeholder="Email Address"
+                  value={reservationData.customer.emailAddress}
                   onChange={handleChange}
                   required
                   className="bg-input h-12 p-3 rounded-md w-full"
@@ -242,14 +285,14 @@ const page = () => {
               </div>
               <div>
                 <Label
-                  htmlFor="Payment Method"
-                  value="paymentMethod"
+                  htmlFor="reservation.paymentMethod"
+                  value="Payment Method"
                   className="text-white"
                 />
                 <input
-                  id="paymentMethod"
-                  type="string"
-                  placeholder="Fee"
+                  id="reservation.paymentMethod"
+                  type="text"
+                  placeholder="Payment Method"
                   value={reservationData.reservation.paymentMethod}
                   onChange={handleChange}
                   required
@@ -257,7 +300,7 @@ const page = () => {
                 />
               </div>
             </div>
-            <hr></hr>
+            <hr />
 
             <div className="mt-4 flex justify-center">
               <Button title="Confirm" onClick={handleSubmit} />
@@ -266,14 +309,12 @@ const page = () => {
         </Modal.Body>
       </Modal>
       <Spin spinning={loading}>
-        {reservations.map((reservation) => {
-          return (
-            <ReservationCard key={reservation.id} reservation={reservation} />
-          );
-        })}
+        {reservations.map((reservation) => (
+          <ReservationCard key={reservation.id} reservation={reservation} />
+        ))}
       </Spin>
     </div>
   );
 };
 
-export default page;
+export default Page;
