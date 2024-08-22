@@ -6,8 +6,10 @@ import ReservationCard from "@/app/Components/reservationCard";
 import { Spin } from "antd";
 import { Label, Modal } from "flowbite-react";
 import Button from "@/app/Components/Button";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,6 +54,9 @@ const Page = () => {
     }
   };
 
+  const handleClick = (id) => {
+    router.push("Reservation/id");
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -61,6 +66,14 @@ const Page = () => {
         reservation: {
           tableNumber: Number(reservationData.reservation.tableNumber),
           floor: Number(reservationData.reservation.floor),
+          reservationDate: reservationData.reservation.reservationDate
+            ? new Date(
+                reservationData.reservation.reservationDate
+              ).toISOString()
+            : null,
+          reservationTime: reservationData.reservation.reservationTime
+            ? `1970-01-01T${reservationData.reservation.reservationTime}:00Z`
+            : null,
         },
       };
 
@@ -310,7 +323,11 @@ const Page = () => {
       </Modal>
       <Spin spinning={loading}>
         {reservations.map((reservation) => (
-          <ReservationCard key={reservation.id} reservation={reservation} />
+          <ReservationCard
+            key={reservation.id}
+            reservation={reservation}
+            onClick={() => handleClick(reservation.id)}
+          />
         ))}
       </Spin>
     </div>

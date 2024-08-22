@@ -27,6 +27,7 @@ module.exports = {
         modal: "100vh",
         popup: "1200px",
         catCard: "12vh",
+        img: "30vh",
       },
       width: {
         card1: "30vw",
@@ -35,6 +36,7 @@ module.exports = {
         card: "750px",
         popup: "640px",
         catCard: "10vw",
+        img: "70vw",
       },
     },
   },
