@@ -23,7 +23,7 @@ export const SideBarArray = [
   {
     imageUrl: "/calender.png",
     text: "Reservation",
-    route: "/reservation",
+    route: "/Reservation",
   },
   {
     imageUrl: "/icon.png",

@@ -27,7 +27,8 @@ module.exports = {
         modal: "100vh",
         popup: "1200px",
         catCard: "12vh",
-        img: "30vh",
+        img: "38vh",
+        reservation: "12vh",
       },
       width: {
         card1: "30vw",

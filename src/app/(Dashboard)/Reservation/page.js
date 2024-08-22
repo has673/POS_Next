@@ -55,7 +55,7 @@ const Page = () => {
   };
 
   const handleClick = (id) => {
-    router.push("Reservation/id");
+    router.push(`Reservation/${id}`);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
