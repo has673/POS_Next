@@ -6,7 +6,7 @@ export const SideBarArray = [
     route: "/Dashboard",
   },
   {
-    imageUrl: "/icon.png",
+    imageUrl: "/staff.png",
     text: "Staff",
     route: "/Staff",
   },
@@ -21,7 +21,7 @@ export const SideBarArray = [
     route: "/Category",
   },
   {
-    imageUrl: "/icon.png",
+    imageUrl: "/calender.png",
     text: "Reservation",
     route: "/reservation",
   },
