@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/app/Components/Button";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params }) => {
@@ -11,13 +12,24 @@ const Page = ({ params }) => {
   const [customer, setCustomer] = useState(null);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const route = useRouter();
 
   // Fetch reservation by ID
+  const deleteReservation = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:4000/reservaton/${id}`);
+      route.push("/Reservation");
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const get = async (id) => {
     try {
       const res = await axios.get(`http://localhost:4000/reservaton/${id}`);
       setReservation(res.data);
       setCustomerId(res.data.customerId); // Set customerId after fetching reservation
+      const { tableNumber } = reservation;
     } catch (err) {
       console.log(err);
     }
@@ -59,8 +71,9 @@ const Page = ({ params }) => {
 
   return (
     <div className="text-white bg-black w-full">
-      <div className="flex justify-center">
+      <div className="flex justify-center read-only:">
         <img src="/tb.png" className="w-img h-img mt-6" alt="Image" />
+        <div className="absolute bottom-5 left-5"></div>
       </div>
       <h1 className="text-white ml-5 my-5 ">Reservation Details</h1>
       {reservation && (
@@ -134,7 +147,15 @@ const Page = ({ params }) => {
           </div>
         </div>
       )}
-      <Button title="Edit" />
+      <div className="flex justify-end gap-3 mt-20 mr-10">
+        <Button title="Edit" />
+        <Button
+          title="Cancel"
+          onClick={() => {
+            deleteReservation(id);
+          }}
+        />
+      </div>
     </div>
   );
 };
