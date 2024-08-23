@@ -10,11 +10,7 @@ export const SideBarArray = [
     text: "Staff",
     route: "/Staff",
   },
-  {
-    imageUrl: "/icon.png",
-    text: "Menu",
-    route: "/menu",
-  },
+
   {
     imageUrl: "/icon.png",
     text: "Category",
