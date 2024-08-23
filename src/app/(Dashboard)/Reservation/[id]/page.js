@@ -1,9 +1,13 @@
 "use client";
 import Button from "@/app/Components/Button";
+
 import EditReservation from "@/app/Components/EditReservation";
 import { Spin } from "antd";
 import axios from "axios";
-import { Modal, Label } from "flowbite-react";
+import { Modal, Label } from "flowbite-react
+
+
+import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params }) => {
@@ -16,14 +20,30 @@ const Page = ({ params }) => {
   const [customer, setCustomer] = useState(null);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+ 
+
+  const route = useRouter();
 
   // Fetch reservation by ID
+  const deleteReservation = async (id) => {
+    try {
+      setLodaingCustomer(true);
+      const res = await axios.delete(`http://localhost:4000/reservaton/${id}`);
+      route.push("/Reservation");
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLodaingCustomer(false);
+    }
+  };
   const get = async (id) => {
     try {
       setLoading(true);
       const res = await axios.get(`http://localhost:4000/reservaton/${id}`);
       setReservation(res.data);
       setCustomerId(res.data.customerId); // Set customerId after fetching reservation
+      const { tableNumber } = reservation;
     } catch (err) {
       console.log(err);
     } finally {
@@ -137,8 +157,9 @@ const Page = ({ params }) => {
 
   return (
     <div className="text-white bg-black w-full">
-      <div className="flex justify-center">
+      <div className="flex justify-center read-only:">
         <img src="/tb.png" className="w-img h-img mt-6" alt="Image" />
+        <div className="absolute bottom-5 left-5"></div>
       </div>
       <h1 className="text-white ml-5 my-5 ">Reservation Details</h1>
       {reservation && (
@@ -187,8 +208,11 @@ const Page = ({ params }) => {
         </Spin>
       )}
       <h1 className="text-white ml-5 my-5 ">Customer Details</h1>
-      {customer && (
-        <Spin spinning={loadingCustomer}>
+
+      
+
+      <Spin spinning={loadingCustomer}>
+        {customer && (
           <div className="flex justify-center">
             <div className="w-4/5 bg-bg h-reservation mr-5 rounded-r-2xl rounded-l-2xl p-4">
               <div className="flex justify-between gap-4">
@@ -214,6 +238,7 @@ const Page = ({ params }) => {
               </div>
             </div>
           </div>
+
         </Spin>
       )}
       <div className="absolut bottom-0 flex justify-center mt-8">
@@ -225,7 +250,18 @@ const Page = ({ params }) => {
         close={closeModal}
         reservation={selectedReservation}
         customer={customer}
-      />
+     
+        )}
+        <div className="flex justify-end gap-3 mt-20 mr-10">
+          <Button title="Edit" />
+          <Button
+            title="Cancel"
+            onClick={() => {
+              deleteReservation(id);
+            }}
+          />
+        </div>
+      </Spin>
     </div>
   );
 };
