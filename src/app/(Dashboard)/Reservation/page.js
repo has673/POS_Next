@@ -24,7 +24,7 @@ const Page = () => {
       paxNumber: 0,
       reservationDate: "",
       reservationTime: "",
-      depositFee: 0,
+      depositFee: 0.0,
       status: "",
       floor: 0,
       paymentMethod: "",
@@ -74,6 +74,9 @@ const Page = () => {
           reservationTime: reservationData.reservation.reservationTime
             ? `1970-01-01T${reservationData.reservation.reservationTime}:00Z`
             : null,
+          depositFee: parseFloat(reservationData.reservation.depositFee),
+          status: reservationData.reservation.status,
+          paymentMethod: reservationData.reservation.paymentMethod,
         },
       };
 
@@ -82,6 +85,7 @@ const Page = () => {
         parsedData
       );
       console.log(res.data);
+      getReservations();
     } catch (err) {
       console.log(err);
     }

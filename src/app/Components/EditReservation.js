@@ -2,14 +2,136 @@
 import { Modal, Label } from "flowbite-react";
 
 import React, { useEffect, useState } from "react";
+import Button from "./Button";
+import axios from "axios";
 
-const EditReservation = (onOpen, onClose, reseration, customer) => {
+const EditReservation = ({ open, close, reservation, customer }) => {
+  // const { id } = reservation;
+
+  // const [reservationId, setReservationId] = useState(reservation.id);
+  const [reservationData, setReservationData] = useState({
+    customer: {
+      fullName: "",
+      phoneNumber: "",
+      emailAddress: "",
+    },
+    reservation: {
+      tableNumber: 0,
+      paxNumber: 0,
+      reservationDate: "",
+      reservationTime: "",
+      depositFee: 0,
+      status: "",
+      floor: 0,
+      paymentMethod: "",
+    },
+  });
+
+  console.log(reservation);
+  let id;
+  if (reservation) {
+    id = reservation.id;
+  }
+
+  // Update state based on props
+  useEffect(() => {
+    if (reservation && customer) {
+      setReservationData({
+        reservation: {
+          tableNumber: reservation.tableNumber || "",
+          reservationDate: reservation.reservationDate || "",
+          reservationTime: reservation.reservationTime || "",
+          paxNumber: reservation.paxNumber || "",
+          depositFee: reservation.depositFee || "",
+          status: reservation.status || "",
+          floor: reservation.floor || "",
+          paymentMethod: reservation.paymentMethod || "",
+        },
+        customer: {
+          fullName: customer.fullName || "",
+          phoneNumber: customer.phoneNumber || "",
+          emailAddress: customer.emailAddress || "",
+        },
+      });
+    }
+  }, [reservation, customer]);
+
+  // Function to format date to YYYY-MM-DD
+  const formatDate = (dateString) => {
+    if (!dateString) return ""; // If dateString is empty or undefined, return an empty string
+
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
+  // Function to format time to HH:MM
+  const formatTime = (dateString) => {
+    if (!dateString) return ""; // If dateString is empty or undefined, return an empty string
+
+    const date = new Date(dateString);
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${hours}:${minutes}`;
+  };
+
+  // Handle changes to inputs
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    const [parent, child] = id.split(".");
+    setReservationData((prevData) => ({
+      ...prevData,
+      [parent]: {
+        ...prevData[parent],
+        [child]: value,
+      },
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    // Handle form submission logic here
+    console.log(reservationData);
+
+    e.preventDefault();
+
+    try {
+      const parsedData = {
+        tableNumber: Number(reservationData.reservation.tableNumber),
+        floor: Number(reservationData.reservation.floor),
+        reservationDate: reservationData.reservation.reservationDate
+          ? new Date(reservationData.reservation.reservationDate).toISOString()
+          : null,
+        // reservationTime: reservationData.reservationTime
+        //   ? `1970-01-01T${reservationData.reservationTime}:00Z`
+        //   : null,
+        reservationTime: reservationData.reservation.reservationTime
+          ? reservationData.reservation.reservationTime // Assuming reservationTime is in HH:mm:ss format
+          : null,
+        depositFee: reservation.depositFee,
+        status: reservationData.status,
+        paymentMethod: reservationData.paymentMethod,
+      };
+
+      const res = await axios.put(
+        `http://localhost:4000/reservaton/${id}`,
+        parsedData
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Modal
-      show={onOpen}
+      show={open}
       dismissible
       size="md"
-      onClose={onClose}
+      onClose={close}
       position="center"
       className="w-popup h-2/3 bg-bg"
     >
@@ -17,9 +139,8 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
       <Modal.Body className="bg-bg">
         <div className="space-y-6">
           <h3 className="text-xl font-medium text-white text-center dark:text-white">
-            Add Reservation
+            Edit Reservation
           </h3>
-
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label
@@ -29,7 +150,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               />
               <select
                 id="reservation.tableNumber"
-                placeholder="Select table"
                 value={reservationData.reservation.tableNumber}
                 onChange={handleChange}
                 required
@@ -42,7 +162,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
                 <option value="4">4</option>
               </select>
             </div>
-
             <div className="col-span-1">
               <Label
                 htmlFor="reservation.floor"
@@ -51,7 +170,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               />
               <select
                 id="reservation.floor"
-                placeholder="Select floor"
                 value={reservationData.reservation.floor}
                 onChange={handleChange}
                 required
@@ -73,8 +191,7 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               <input
                 id="reservation.reservationDate"
                 type="date"
-                placeholder="Enter reservation date"
-                value={reservationData.reservation.reservationDate}
+                value={formatDate(reservationData.reservation.reservationDate)}
                 onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md w-full"
@@ -89,8 +206,7 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               <input
                 id="reservation.reservationTime"
                 type="time"
-                placeholder="Enter reservation time"
-                value={reservationData.reservation.reservationTime}
+                value={formatTime(reservationData.reservation.reservationTime)}
                 onChange={handleChange}
                 required
                 className="bg-input h-12 p-3 rounded-md w-full"
@@ -104,8 +220,7 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               />
               <input
                 id="reservation.status"
-                type="string"
-                placeholder="Status"
+                type="text"
                 value={reservationData.reservation.status}
                 onChange={handleChange}
                 required
@@ -121,7 +236,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               <input
                 id="reservation.depositFee"
                 type="number"
-                placeholder="Fee"
                 value={reservationData.reservation.depositFee}
                 onChange={handleChange}
                 required
@@ -135,7 +249,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
           <h3 className="text-xl font-medium text-white text-center dark:text-white">
             Customer Details
           </h3>
-
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label
@@ -146,7 +259,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               <input
                 id="customer.fullName"
                 type="text"
-                placeholder="Enter Full Name"
                 value={reservationData.customer.fullName}
                 onChange={handleChange}
                 required
@@ -162,7 +274,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               <input
                 id="customer.phoneNumber"
                 type="text"
-                placeholder="Phone Number"
                 value={reservationData.customer.phoneNumber}
                 onChange={handleChange}
                 required
@@ -178,7 +289,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               <input
                 id="customer.emailAddress"
                 type="email"
-                placeholder="Email Address"
                 value={reservationData.customer.emailAddress}
                 onChange={handleChange}
                 required
@@ -194,7 +304,6 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
               <input
                 id="reservation.paymentMethod"
                 type="text"
-                placeholder="Payment Method"
                 value={reservationData.reservation.paymentMethod}
                 onChange={handleChange}
                 required
@@ -203,9 +312,8 @@ const EditReservation = (onOpen, onClose, reseration, customer) => {
             </div>
           </div>
           <hr />
-
           <div className="mt-4 flex justify-center">
-            <Button title="Confirm" onClick={handleSubmit} />
+            <Button title="Edit" onClick={handleSubmit} />
           </div>
         </div>
       </Modal.Body>
