@@ -111,7 +111,7 @@ const EditReservation = ({ open, close, reservation, customer }) => {
         reservationTime: reservationData.reservation.reservationTime
           ? reservationData.reservation.reservationTime // Assuming reservationTime is in HH:mm:ss format
           : null,
-        depositFee: reservation.depositFee,
+        depositFee: parseFloat(reservationData.reservation.depositFee),
         status: reservationData.status,
         paymentMethod: reservationData.paymentMethod,
       };

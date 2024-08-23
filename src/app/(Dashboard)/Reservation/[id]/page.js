@@ -1,13 +1,10 @@
 "use client";
 import Button from "@/app/Components/Button";
-
 import EditReservation from "@/app/Components/EditReservation";
 import { Spin } from "antd";
 import axios from "axios";
-import { Modal, Label } from "flowbite-react
-
-
-import { useRouter } from "next/navigation"
+import { Modal, Label } from "flowbite-react";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Page = ({ params }) => {
@@ -20,30 +17,28 @@ const Page = ({ params }) => {
   const [customer, setCustomer] = useState(null);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
- 
 
   const route = useRouter();
 
-  // Fetch reservation by ID
   const deleteReservation = async (id) => {
     try {
-      setLodaingCustomer(true);
+      setLoadingCustomer(true);
       const res = await axios.delete(`http://localhost:4000/reservaton/${id}`);
       route.push("/Reservation");
       console.log(res.data);
     } catch (err) {
       console.log(err);
     } finally {
-      setLodaingCustomer(false);
+      setLoadingCustomer(false);
     }
   };
+
   const get = async (id) => {
     try {
       setLoading(true);
       const res = await axios.get(`http://localhost:4000/reservaton/${id}`);
       setReservation(res.data);
       setCustomerId(res.data.customerId); // Set customerId after fetching reservation
-      const { tableNumber } = reservation;
     } catch (err) {
       console.log(err);
     } finally {
@@ -91,7 +86,7 @@ const Page = ({ params }) => {
       };
 
       const res = await axios.put(
-        `http://localhost:4000/reservaton${id}`,
+        `http://localhost:4000/reservaton/${id}`,
         parsedData
       );
       console.log(res.data);
@@ -99,7 +94,7 @@ const Page = ({ params }) => {
       console.log(err);
     }
   };
-  // Fetch customer by ID
+
   const getCustomer = async (customerId) => {
     setLoadingCustomer(true);
     try {
@@ -114,12 +109,10 @@ const Page = ({ params }) => {
     }
   };
 
-  // Fetch reservation when component mounts
   useEffect(() => {
     get(id);
-  }, []);
+  }, [id]);
 
-  // Fetch customer when customerId is available
   useEffect(() => {
     if (customerId) {
       getCustomer(customerId);
@@ -132,11 +125,13 @@ const Page = ({ params }) => {
     setIsModalOpen(true);
     console.log(selectedCustomer);
   };
+
   const closeModal = () => {
     setSelectedCustomer(null);
     setSelectedReservation(null);
     setIsModalOpen(false);
   };
+
   const [reservationData, setReservationData] = useState({
     customer: {
       fullName: "",
@@ -155,62 +150,63 @@ const Page = ({ params }) => {
     },
   });
 
+  let tableNo;
+  if (reservation) {
+    tableNo = reservation.tableNumber;
+  }
+
   return (
     <div className="text-white bg-black w-full">
-      <div className="flex justify-center read-only:">
+      <div className="relative flex justify-center">
         <img src="/tb.png" className="w-img h-img mt-6" alt="Image" />
-        <div className="absolute bottom-5 left-5"></div>
+        <div className="absolute bottom-10 text-white bg-black bg-opacity-50 p-2 rounded">
+          Table No {tableNo}
+        </div>
       </div>
-      <h1 className="text-white ml-5 my-5 ">Reservation Details</h1>
-      {reservation && (
-        <Spin spinning={loading}>
-          <div className="flex justify-center">
-            <div className="w-4/5 bg-bg h-reservation mr-5 rounded-r-2xl rounded-l-2xl p-4 ">
-              <div className="flex justify-between gap-4">
-                <div>
-                  <h4 className="text-pink">Table</h4>
-
-                  <h5 className="text-white">{reservation.tableNumber}</h5>
-                </div>
-
-                <div>
-                  <h4 className="text-pink">Floor</h4>
-                  <h5 className="text-white">{reservation.floor}</h5>
-                </div>
-                <div>
-                  <h4 className="text-pink">Guests</h4>
-                  <h5 className="text-white">{reservation.paxNumber}</h5>
-                </div>
-
-                <div>
-                  <h4 className="text-pink">Date</h4>
-                  <h5 className="text-white">
-                    {new Date(reservation.reservationDate).toLocaleDateString()}
-                  </h5>
-                </div>
-                <div>
-                  <h4 className="text-pink">Time</h4>
-                  <h5 className="text-white">
-                    {new Date(reservation.reservationTime).toLocaleTimeString()}
-                  </h5>
-                </div>
-                <div>
-                  <h4 className="text-pink">Fee</h4>
-                  <h5 className="text-white">{reservation.depositFee}</h5>
-                </div>
-                <div>
-                  <h4 className="text-pink">Status</h4>
-                  <h5 className="text-white">{reservation.status}</h5>
-                </div>
+      <h1 className="text-white ml-5 my-5">Reservation Details</h1>
+      <Spin spinning={loading}>
+        <div className="flex justify-center">
+          <div className="w-4/5 bg-bg h-reservation mr-5 rounded-r-2xl rounded-l-2xl p-4">
+            <div className="flex justify-between gap-4">
+              <div>
+                <h4 className="text-pink">Table</h4>
+                <h5 className="text-white">{reservation?.tableNumber}</h5>
+              </div>
+              <div>
+                <h4 className="text-pink">Floor</h4>
+                <h5 className="text-white">{reservation?.floor}</h5>
+              </div>
+              <div>
+                <h4 className="text-pink">Guests</h4>
+                <h5 className="text-white">{reservation?.paxNumber}</h5>
+              </div>
+              <div>
+                <h4 className="text-pink">Date</h4>
+                <h5 className="text-white">
+                  {reservation?.reservationDate &&
+                    new Date(reservation.reservationDate).toLocaleDateString()}
+                </h5>
+              </div>
+              <div>
+                <h4 className="text-pink">Time</h4>
+                <h5 className="text-white">
+                  {reservation?.reservationTime &&
+                    new Date(reservation.reservationTime).toLocaleTimeString()}
+                </h5>
+              </div>
+              <div>
+                <h4 className="text-pink">Fee</h4>
+                <h5 className="text-white">{reservation?.depositFee}</h5>
+              </div>
+              <div>
+                <h4 className="text-pink">Status</h4>
+                <h5 className="text-white">{reservation?.status}</h5>
               </div>
             </div>
           </div>
-        </Spin>
-      )}
-      <h1 className="text-white ml-5 my-5 ">Customer Details</h1>
-
-      
-
+        </div>
+      </Spin>
+      <h1 className="text-white ml-5 my-5">Customer Details</h1>
       <Spin spinning={loadingCustomer}>
         {customer && (
           <div className="flex justify-center">
@@ -218,10 +214,8 @@ const Page = ({ params }) => {
               <div className="flex justify-between gap-4">
                 <div>
                   <h4 className="text-pink">Name</h4>
-
                   <h5 className="text-white">{customer.fullName}</h5>
                 </div>
-
                 <div>
                   <h4 className="text-pink">Email</h4>
                   <h5 className="text-white">{customer.emailAddress}</h5>
@@ -230,30 +224,16 @@ const Page = ({ params }) => {
                   <h4 className="text-pink">Phone</h4>
                   <h5 className="text-white">{customer.phoneNumber}</h5>
                 </div>
-
                 <div>
                   <h4 className="text-pink">Payment Method</h4>
-                  <h5 className="text-white">{reservation.paymentMethod}</h5>
+                  <h5 className="text-white">{reservation?.paymentMethod}</h5>
                 </div>
               </div>
             </div>
           </div>
-
-        </Spin>
-      )}
-      <div className="absolut bottom-0 flex justify-center mt-8">
-        {" "}
-        <Button title="Edit" onClick={openModal} />
-      </div>
-      <EditReservation
-        open={isModalOpen}
-        close={closeModal}
-        reservation={selectedReservation}
-        customer={customer}
-     
         )}
-        <div className="flex justify-end gap-3 mt-20 mr-10">
-          <Button title="Edit" />
+        <div className="flex justify-end mr-10 gap-4 mt-10">
+          <Button title="Edit" onClick={openModal} />
           <Button
             title="Cancel"
             onClick={() => {
@@ -262,6 +242,12 @@ const Page = ({ params }) => {
           />
         </div>
       </Spin>
+      <EditReservation
+        open={isModalOpen}
+        close={closeModal}
+        reservation={selectedReservation}
+        customer={selectedCustomer}
+      />
     </div>
   );
 };
