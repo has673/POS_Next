@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/app/Components/Button";
+import { Spin } from "antd";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -12,16 +13,21 @@ const Page = ({ params }) => {
   const [customer, setCustomer] = useState(null);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [loadingCustomer, setLodaingCustomer] = useState(false);
+
   const route = useRouter();
 
   // Fetch reservation by ID
   const deleteReservation = async (id) => {
     try {
+      setLodaingCustomer(true);
       const res = await axios.delete(`http://localhost:4000/reservaton/${id}`);
       route.push("/Reservation");
       console.log(res.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLodaingCustomer(false);
     }
   };
   const get = async (id) => {
@@ -120,42 +126,44 @@ const Page = ({ params }) => {
         </div>
       )}
       <h1 className="text-white ml-5 my-5 ">Customer Details</h1>
-      {customer && (
-        <div className="flex justify-center">
-          <div className="w-4/5 bg-bg h-reservation mr-5 rounded-r-2xl rounded-l-2xl p-4">
-            <div className="flex justify-between gap-4">
-              <div>
-                <h4 className="text-pink">Name</h4>
+      <Spin spinning={loadingCustomer}>
+        {customer && (
+          <div className="flex justify-center">
+            <div className="w-4/5 bg-bg h-reservation mr-5 rounded-r-2xl rounded-l-2xl p-4">
+              <div className="flex justify-between gap-4">
+                <div>
+                  <h4 className="text-pink">Name</h4>
 
-                <h5 className="text-white">{customer.fullName}</h5>
-              </div>
+                  <h5 className="text-white">{customer.fullName}</h5>
+                </div>
 
-              <div>
-                <h4 className="text-pink">Email</h4>
-                <h5 className="text-white">{customer.emailAddress}</h5>
-              </div>
-              <div>
-                <h4 className="text-pink">Phone</h4>
-                <h5 className="text-white">{customer.phoneNumber}</h5>
-              </div>
+                <div>
+                  <h4 className="text-pink">Email</h4>
+                  <h5 className="text-white">{customer.emailAddress}</h5>
+                </div>
+                <div>
+                  <h4 className="text-pink">Phone</h4>
+                  <h5 className="text-white">{customer.phoneNumber}</h5>
+                </div>
 
-              <div>
-                <h4 className="text-pink">Payment Method</h4>
-                <h5 className="text-white">{reservation.paymentMethod}</h5>
+                <div>
+                  <h4 className="text-pink">Payment Method</h4>
+                  <h5 className="text-white">{reservation.paymentMethod}</h5>
+                </div>
               </div>
             </div>
           </div>
+        )}
+        <div className="flex justify-end gap-3 mt-20 mr-10">
+          <Button title="Edit" />
+          <Button
+            title="Cancel"
+            onClick={() => {
+              deleteReservation(id);
+            }}
+          />
         </div>
-      )}
-      <div className="flex justify-end gap-3 mt-20 mr-10">
-        <Button title="Edit" />
-        <Button
-          title="Cancel"
-          onClick={() => {
-            deleteReservation(id);
-          }}
-        />
-      </div>
+      </Spin>
     </div>
   );
 };
