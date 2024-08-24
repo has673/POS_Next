@@ -33,6 +33,7 @@ module.exports = {
         reservation: "12vh",
         fivevh: "5vh",
         threevh: "4vh",
+        card: "60vh",
       },
       width: {
         card1: "30vw",
@@ -43,6 +44,7 @@ module.exports = {
         popup: "640px",
         catCard: "10vw",
         img: "70vw",
+        sixtyvw: "60vw",
       },
     },
   },
