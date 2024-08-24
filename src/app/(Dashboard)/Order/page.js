@@ -27,9 +27,9 @@ const page = () => {
   return (
     <div className="bg-black w-full">
       <Spin spinning={loading}>
-        <div className="flex justify-center">
-          {categories.map((index, category) => (
-            <CategoryCard category={category} />
+        <div className="flex justify-center mt-5 gap-3 text-white">
+          {categories.map((category) => (
+            <CategoryCard key={category.id} category={category} />
           ))}
         </div>
       </Spin>
