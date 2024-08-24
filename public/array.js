@@ -31,4 +31,9 @@ export const SideBarArray = [
     text: "Admin",
     route: "/admin",
   },
+  {
+    imageUrl: "/icon.png",
+    text: "Orders",
+    route: "/Orders",
+  },
 ];
