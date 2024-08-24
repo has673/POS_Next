@@ -3,7 +3,7 @@ import ProfilecCard from "@/app/Components/ProfilecCard";
 
 export default function layout({ children }) {
   return (
-    <div className="flex flex-row">
+    <div className=" bg-black w-full ">
       <ProfilecCard />
       {children}{" "}
     </div>
