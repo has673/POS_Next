@@ -48,7 +48,7 @@ const EmployeeTable = ({ data, onRemove }) => {
     <>
       <div className="overflow-x-auto   shadow-md rounded-md">
         <table className="min-w-full text-white cursor-pointer">
-          <thead className="bg-input">
+          <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th className="py-2 px-4 border-r">ID</th>
               <th className="py-2 px-4 border-r">Name</th>
@@ -59,11 +59,13 @@ const EmployeeTable = ({ data, onRemove }) => {
             </tr>
           </thead>
           <tbody>
-            {currentData.map((employee) => (
+            {currentData.map((employee, index) => (
               <tr
                 // onClick={() => singlePage(employee.id)}
                 key={employee.id}
-                className="bg-input border-b border-gray-600"
+                className={`border-b text-white dark:border-gray-700 ${
+                  index % 2 === 0 ? "bg-bg" : "bg-input"
+                }`}
               >
                 <td className="py-2 px-4 border-r">{employee.id}</td>
                 <td className="py-2 px-4 border-r">{employee.Name}</td>
@@ -107,7 +109,7 @@ const EmployeeTable = ({ data, onRemove }) => {
         </table>
 
         {/* Pagination Controls */}
-        <div className="flex justify-between items-center mt-4 p-2 bg-bg rounded-b-md">
+        <div className="flex justify-between items-center mt-4 p-2 rounded-b-md">
           <button
             className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-500"
             onClick={() => handlePageChange(currentPage - 1)}
