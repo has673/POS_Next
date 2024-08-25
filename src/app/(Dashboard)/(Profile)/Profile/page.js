@@ -18,11 +18,14 @@ const page = () => {
       [id]: value,
     }));
   };
+  const discard = (e) => {
+    e.target.value = "";
+  };
   return (
-    <div className="flex flex-col">
-      <div className="bg-bg w-sixtyvw h-card rounded-md ">
-        <Heading2 text="Personal Information" />
-        <div className="ml-5">
+    <div className="abolute top-0">
+      <div className="bg-bg w-sixtyvw h-card rounded-md ml-8">
+        <h2 className="ml-8 text-white my-4">Personal Information</h2>
+        <div className="ml-8">
           <Label htmlFor="name" value="Name" className="text-white" />
           <div>
             <input
@@ -35,7 +38,7 @@ const page = () => {
             />
           </div>
         </div>
-        <div className="ml-5">
+        <div className="ml-8">
           <Label htmlFor="email" value="Email" className="text-white" />
           <div>
             <input
@@ -48,11 +51,11 @@ const page = () => {
             />
           </div>
         </div>
-        <div className="ml-5">
+        <div className="ml-8">
           <Label htmlFor="email" value="Address" className="text-white" />
           <div>
             <input
-              id="name"
+              id="addrress"
               placeholder="hoh@example.com"
               required
               value={userdata.address}
@@ -62,12 +65,12 @@ const page = () => {
           </div>
         </div>
 
-        <div className="ml-5">
+        <div className="ml-8">
           <Label htmlFor="email" value="Password" className="text-white" />
           <div>
             <input
-              id="name"
-              placeholder="hoh@example.com"
+              id="password"
+              placeholder="Enter password"
               required
               value={userdata.password}
               className="bg-input h-12 p-3 rounded-md w-5/6"
@@ -75,11 +78,14 @@ const page = () => {
             />
           </div>
         </div>
-        <div className="flex justify-end ml-6 mt-3 space-x-2">
-          <p className="text-white underline hover:text-black cursor-pointer">
+        <div className="flex justify-end mr-10 mt-3 space-x-2">
+          <p
+            className="text-white underline hover:text-black cursor-pointer"
+            onClick={discard}
+          >
             Discard Changes
           </p>
-          <button className="bg-pink text-black w-1/5 p-3">Update</button>
+          <button className="bg-pink text-black w-1/12 p-3">Update</button>
         </div>
       </div>
     </div>

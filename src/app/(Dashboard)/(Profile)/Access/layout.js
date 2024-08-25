@@ -1,5 +1,4 @@
-import React, { Suspense } from "react";
-import ProfilecCard from "@/app/Components/ProfilecCard";
+import React from "react";
 import AddCard from "@/app/Components/AddCard";
 
 export default function layout({ children }) {

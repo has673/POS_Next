@@ -46,6 +46,9 @@ module.exports = {
         img: "70vw",
         sixtyvw: "60vw",
       },
+      margin: {
+        "6vw": "45vw",
+      },
     },
   },
   plugins: [],

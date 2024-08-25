@@ -2,7 +2,7 @@ import React from "react";
 
 const AddCard = () => {
   return (
-    <div className="bg-bg w-profileCard h-add text-white rounded-md  mt-7 ml-7 p-3">
+    <div className="bg-bg w-profileCard h-add text-white rounded-md ml-7 mt-11 p-3">
       <h3> Add New User</h3>
       <div className="my-5">
         <div>
