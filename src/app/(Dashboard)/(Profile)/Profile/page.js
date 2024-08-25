@@ -1,16 +1,45 @@
 "use client";
 import Heading2 from "@/app/Components/Heading2";
+import axios from "axios";
 import { Label } from "flowbite-react";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const page = () => {
+const page = ({ params }) => {
+  const { id } = params;
   const [userdata, setUserData] = useState({
     name: "",
     email: "",
     address: "",
     password: "",
   });
+  const getUser = async (id) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/auth/login/getProfile${id}`
+      );
+      setUserData(res.data);
+      console.log(userdata);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getUser(id);
+  }, [id]);
+  const handleSubmit = async (e) => {
+    e.preventDeafult();
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/auth/login/updateProfile${id}`,
+        userdata
+      );
+      console.log(response.data);
+      getUser();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const onChange = (e) => {
     const { id, value } = e.target;
     setUserData((prevUserData) => ({
