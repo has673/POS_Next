@@ -20,6 +20,9 @@
   #box {
     @apply bg-black min-h-screen;
   }
+  #hover:hover {
+    @apply bg-pink text-black;
+  }
 }
 
 * {
