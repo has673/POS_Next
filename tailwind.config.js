@@ -34,6 +34,7 @@ module.exports = {
         fivevh: "5vh",
         threevh: "4vh",
         card: "60vh",
+        itemCard: "12vh",
       },
       width: {
         card1: "30vw",
