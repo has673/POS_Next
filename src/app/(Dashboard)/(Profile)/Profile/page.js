@@ -28,7 +28,7 @@ const page = ({ params }) => {
     getUser(id);
   }, [id]);
   const handleSubmit = async (e) => {
-    e.preventDeafult();
+    e.preventDefult();
     try {
       const response = await axios.put(
         `http://localhost:4000/auth/login/updateProfile${id}`,
@@ -48,10 +48,15 @@ const page = ({ params }) => {
     }));
   };
   const discard = (e) => {
-    e.target.value = "";
+    setUserData({
+      name: "",
+      email: "",
+      address: "",
+      password: "",
+    }); //
   };
   return (
-    <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 ml-4">
+    <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 mr-4">
       <h2 className="ml-8 text-white p-3">Personal Information</h2>
       <div className="ml-8 mt-5">
         <Label htmlFor="name" value="Name" className="text-white" />

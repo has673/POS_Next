@@ -8,7 +8,7 @@ const UserCard = ({ user }) => {
   return (
     <div className="text-white">
       <div className="flex justify-start p-4 gap-4">
-        <h2>{user.username}.</h2>
+        <h2>{user.username}</h2>
 
         <div className="bg-pink text-black p-3">
           <p>{user.role}</p>
