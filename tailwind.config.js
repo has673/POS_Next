@@ -44,7 +44,8 @@ module.exports = {
         popup: "640px",
         catCard: "10vw",
         img: "70vw",
-        sixtyvw: "60vw",
+        sixtyvw: "50vw",
+        "60vw": "60vw",
       },
       margin: {
         "6vw": "45vw",

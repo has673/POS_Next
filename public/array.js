@@ -37,3 +37,4 @@ export const SideBarArray = [
     route: "/Order",
   },
 ];
+export const toggleArray = ["Dasboard", "Inventoey", " Orders"];
