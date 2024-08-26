@@ -7,14 +7,20 @@ import InputField from "../../Components/InputField";
 import Button from "../../Components/Button";
 import Link from "next/link";
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
-import "./style.css"
+import "./style.css";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess,
+} from "../../redux/slices/userslice";
 
 const page = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,31 +30,33 @@ const page = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-     [name]:  value ,
+      [name]: value,
     }));
   };
   const handleSubmit = async (e) => {
-
     e.preventDefault();
-    try{
-      const response = await axios.post('http://localhost:4000/auth/login',{
-        email:formData.email,
-        password:formData.password
-      },{
-        withCredentials:true
-      }
-      )
-     
-      const {token} = response.data
-      console.log(response.data)
-      router.push('/Dashboard')
+    dispatch(loginStart());
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/auth/login",
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
+      const { token } = response.data;
+      console.log(token);
+      console.log(response.data);
+      dispatch(loginSuccess(response.data));
+      router.push("/Dashboard");
+    } catch (err) {
+      console.log(err);
+      dispatch(loginFailure());
     }
-   
-    catch(err){
-      console.log(err)
-    }
-  
   };
   return (
     <div id="box">

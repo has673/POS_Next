@@ -8,6 +8,7 @@ const ItemCard = ({ item }) => {
       id="card"
       className="w-catCard h-itemCard bg-dark p-3 rounded-md cursor-pointer text-sm"
     >
+      <h3 className="text-gray">Order Khitchen</h3>
       <div className=" flex justify-end">
         {" "}
         {item.photo ? (

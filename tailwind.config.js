@@ -20,6 +20,7 @@ module.exports = {
         input: "#3D4142",
         placeholderColor: "#777979",
         dark: "#333333",
+        gray: "#777979",
       },
       height: {
         card: "50vh",
