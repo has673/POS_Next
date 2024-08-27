@@ -36,6 +36,15 @@ const Page = () => {
     description: "",
   });
 
+  const [edititemData, setEditItemData] = useState({
+    photo: "",
+    name: "",
+    price: 0,
+    availability: "",
+    categoryId: 0,
+    description: "",
+  });
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -206,15 +215,6 @@ const Page = () => {
       }
     }
   };
-
-  const [edititemData, setEditItemData] = useState({
-    photo: "",
-    name: "",
-    price: 0,
-    availability: "",
-    categoryId: 0,
-    description: "",
-  });
 
   const handleEditItemChange = (e) => {
     const { id, value } = e.target;
