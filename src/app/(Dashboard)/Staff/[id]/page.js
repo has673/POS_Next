@@ -1,5 +1,6 @@
-import Heading from "@/app/Components/Heading";
+import Heading from "@/Components/Heading";
 import { Label } from "flowbite-react";
+import Cookies from "js-cookie";
 import React from "react";
 
 const Page = async ({ params }) => {
@@ -7,7 +8,12 @@ const Page = async ({ params }) => {
   let employee = null;
 
   try {
-    const response = await fetch(`http://localhost:4000/employees/${id}`);
+    const token = Cookies.get("token");
+    const response = await fetch(`http://localhost:4000/employees/${id}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

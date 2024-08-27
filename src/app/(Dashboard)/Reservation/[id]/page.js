@@ -1,9 +1,10 @@
 "use client";
-import Button from "@/app/Components/Button";
-import EditReservation from "@/app/Components/EditReservation";
+import Button from "@/Components/Button";
+import EditReservation from "@/Components/EditReservation";
 import { Spin } from "antd";
 import axios from "axios";
 import { Modal, Label } from "flowbite-react";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -36,7 +37,12 @@ const Page = ({ params }) => {
   const get = async (id) => {
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:4000/reservaton/${id}`);
+      const token = Cookies.get("token");
+      const res = await axios.get(`http://localhost:4000/reservaton/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setReservation(res.data);
       setCustomerId(res.data.customerId); // Set customerId after fetching reservation
     } catch (err) {

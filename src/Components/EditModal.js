@@ -8,7 +8,7 @@ const EditModal = ({ onOpen, onClose, item }) => {
   const [edititemData, setEditItemData] = useState({
     photo: "",
     name: "",
-    price: 0,
+    price: "",
     availability: "",
     category: "",
     description: "",
@@ -24,7 +24,7 @@ const EditModal = ({ onOpen, onClose, item }) => {
       setEditItemData({
         photo: item.photo || "",
         name: item.name || "",
-        price: item.price || 0,
+        price: item.price || "",
         availability: item.availability || "",
         category: item.category || "",
         description: item.description || "",
@@ -33,46 +33,95 @@ const EditModal = ({ onOpen, onClose, item }) => {
       console.log(`the item data: ${edititemData}`);
     }
   }, [item]);
+  // const handleItemSubmit = async (e) => {
+  //   console.log("item");
+  //   e.preventDefault();
+
+  //   try {
+  //     constedititemDataToSend = new FormData();
+  //     if (photo) {
+  //       itemDataToSend.append("file", photo);
+  //     }
+  //     console.log(itemData.price);
+  //     const item = edititemData.price;
+  //     console.log(typeof item);
+  //     const priceValue = parseInt(edititemData.price, 10);
+  //     if (isNaN(priceValue)) {
+  //       throw new Error("Invalid price value");
+  //     }
+
+  //     itemDataToSend.append("name", edititemData.name);
+  //     itemDataToSend.append("price", priceValue);
+  //     itemDataToSend.append("description", edititemData.description);
+  //     itemDataToSend.append("availability", edititemData.availability);
+  //     itemDataToSend.append("categoryId", edititemData.category);
+  //     console.log("PRICE : ", typeof itemDataToSend.price);
+  //     console.log("Data Object : ", itemDataToSend);
+  //     console.log("ITEM DATA: ", itemData);
+  //     const response = await axios.put(
+  //       "http://localhost:4000/items",
+  //       itemDataToSend,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+
+  //     console.log(response.data);
+
+  //     setEditItemData({
+  //       photo: "",
+  //       name: "",
+  //       price: 0,
+  //       availability: "",
+  //       category: "",
+  //       description: "",
+  //     });
+  //     getitems();
+  //     closeitemModal();
+  //   } catch (err) {
+  //     if (err.response) {
+  //       console.error("Error response:", err.response.data);
+  //     } else if (err.request) {
+  //       console.error("Error request:", err.request);
+  //     } else {
+  //       console.error("Error:", err.message);
+  //     }
+  //   }
+  // };
   const handleItemSubmit = async (e) => {
-    console.log("item");
     e.preventDefault();
 
     try {
-      constedititemDataToSend = new FormData();
-      if (photo) {
-        itemDataToSend.append("file", photo);
-      }
-      console.log(itemData.price);
-      const item = edititemData.price;
-      console.log(typeof item);
-      itemDataToSend.append("name", edititemData.name);
-      itemDataToSend.append("price", parseInt(item));
-      itemDataToSend.append("description", edititemData.description);
-      itemDataToSend.append("availability", edititemData.availability);
-      itemDataToSend.append("categoryId", edititemData.category);
-      console.log("PRICE : ", typeof itemDataToSend.price);
-      console.log("Data Object : ", itemDataToSend);
-      console.log("ITEM DATA: ", itemData);
-      const response = await axios.put(
-        "http://localhost:4000/items",
-        itemDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+      const priceValue = parseInt(edititemData.price, 10);
+
+      // Prepare data to send as JSON
+      const itemDataToSend = {
+        ...edititemData,
+        price: Number(edititemData.price),
+      };
+
+      console.log("Data Object-------------:", itemDataToSend);
+
+      const response = await axios.patch(
+        `http://localhost:4000/items/${item.id}`, // Make sure to include the item ID in the URL
+        itemDataToSend
       );
 
       console.log(response.data);
 
+      // Reset form data
       setEditItemData({
         photo: "",
         name: "",
-        price: 0,
+        price: "",
         availability: "",
         category: "",
         description: "",
       });
+
+      // Assuming getitems and closeitemModal are passed in or defined elsewhere
       getitems();
       closeitemModal();
     } catch (err) {
@@ -85,7 +134,6 @@ const EditModal = ({ onOpen, onClose, item }) => {
       }
     }
   };
-
   return (
     <Modal
       show={onOpen}
@@ -123,7 +171,6 @@ const EditModal = ({ onOpen, onClose, item }) => {
                 value={edititemData.price}
                 onChange={handleEditItemChange}
                 required
-                type="number"
                 className="bg-input h-12 p-3 rounded-md w-full"
               />
             </div>

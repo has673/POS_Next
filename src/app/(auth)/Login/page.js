@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import Heading from "../../Components/Heading";
-import Heading2 from "../../Components/Heading2";
-import Para from "../../Components/Para";
-import InputField from "../../Components/InputField";
-import Button from "../../Components/Button";
+import Heading from "../../../Components/Heading";
+import Heading2 from "../../../Components/Heading2";
+import Para from "../../../Components/Para";
+import InputField from "../../../Components/InputField";
+import Button from "../../../Components/Button";
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
@@ -16,7 +16,9 @@ import {
   loginFailure,
   loginStart,
   loginSuccess,
-} from "../../redux/slices/userslice";
+} from "../../../redux/slices/userslice";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const page = () => {
   const router = useRouter();
@@ -49,12 +51,16 @@ const page = () => {
       );
 
       const { token } = response.data;
+      Cookies.set("token", token);
       console.log(token);
       console.log(response.data);
+
       dispatch(loginSuccess(response.data));
+      toast("logged_in");
       router.push("/Dashboard");
     } catch (err) {
       console.log(err);
+      toast.error("an error occured");
       dispatch(loginFailure());
     }
   };

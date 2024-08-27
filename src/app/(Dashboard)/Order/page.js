@@ -1,6 +1,6 @@
 "use client";
-import CategoryCard from "@/app/Components/CategoryCard";
-import ItemCard from "@/app/Components/ItemCard";
+import CategoryCard from "@/Components/CategoryCard";
+import ItemCard from "@/Components/ItemCard";
 import { Spin } from "antd";
 import axios from "axios";
 import React, { useState, useEffect } from "react";

@@ -13,7 +13,7 @@ const page = () => {
       router.push("/Login");
     }
   }, [currentUser, router]);
-  return <div className=" bg-black w-full  text-white">dashboard</div>;
+  return <div className=" bg-black  text-white">dashboard</div>;
 };
 
 export default page;

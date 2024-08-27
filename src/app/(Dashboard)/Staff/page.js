@@ -1,18 +1,22 @@
 "use client";
 
-import Subheading from "@/app/Components/Subheading";
-import Button from "@/app/Components/Button";
+import Subheading from "@/Components/Subheading";
+import Button from "@/Components/Button";
 import axios from "axios";
 import React, { Suspense, useEffect, useState } from "react";
 import Loading from "../Loading";
 import dynamic from "next/dynamic";
-import Modalform from "@/app/Components/Modalform";
+import Modalform from "@/Components/Modalform";
 import { Spin } from "antd";
+import Cookies from "js-cookie";
 
 // Dynamic import
-const EmployeeTable = dynamic(() => import("../../Components/EmployeeTable"), {
-  suspense: true,
-});
+const EmployeeTable = dynamic(
+  () => import("../../../Components/EmployeeTable"),
+  {
+    suspense: true,
+  }
+);
 
 const Page = () => {
   const [data, setData] = useState([]);
@@ -28,7 +32,12 @@ const Page = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:4000/employees");
+        const token = Cookies.get("token");
+        const response = await axios.get("http://localhost:4000/employees", {
+          headers: {
+            Authorization: token,
+          },
+        });
         const result = response.data;
         setData(result);
         setCount(result.length);

@@ -1,62 +1,58 @@
-'use client'
+"use client";
 import React, { useState } from "react";
-import Heading from "../../Components/Heading";
-import Heading2 from "../../Components/Heading2";
-import Button from "../../Components/Button";
-import Para from "../../Components/Para";
-import InputField from "../../Components/InputField";
+import Heading from "../../../Components/Heading";
+import Heading2 from "../../../Components/Heading2";
+import Button from "../../../Components/Button";
+import Para from "../../../Components/Para";
+import InputField from "../../../Components/InputField";
 import axios from "axios";
 
-import './style.css'
+import "./style.css";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const router = useRouter()
+  const router = useRouter();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-     [name]:  value ,
+      [name]: value,
     }));
   };
   const handleSubmit = async (e) => {
-
     e.preventDefault();
-    try{
-      const response = await axios.post('http://localhost:4000/auth/recover-password',{
-        email:formData.email,
-        password:formData.password
-      },{
-        withCredentials:true
-      }
-      )
-     
-     console
-      console.log(response.data)
-      router.push('/Login')
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/auth/recover-password",
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
+      console;
+      console.log(response.data);
+      router.push("/Login");
+    } catch (err) {
+      console.log(err);
     }
-   
-    catch(err){
-      console.log(err)
-    }
-  
   };
   return (
     <>
-    <Heading text="CYPSOS" />
-    <div className="flex flex-col justify-center items-center ">
-    <div className="bg-bg h-card w-card1 rounded-4xl text-center">
-   
-    <Heading2 text="Recover Password" />
-    <Para content='Please enter your credentials below to continue'/>
+      <Heading text="CYPSOS" />
+      <div className="flex flex-col justify-center items-center ">
+        <div className="bg-bg h-card w-card1 rounded-4xl text-center">
+          <Heading2 text="Recover Password" />
+          <Para content="Please enter your credentials below to continue" />
 
-    <InputField
+          <InputField
             label="Email"
             name="email"
             type="email"
@@ -73,12 +69,10 @@ const page = () => {
             val={formData.password}
             onChange={handleChange}
           />
-    <Button title='Reset' onClick={handleSubmit}/>
-  </div>
+          <Button title="Reset" onClick={handleSubmit} />
+        </div>
       </div>
-
     </>
-    
   );
 };
 

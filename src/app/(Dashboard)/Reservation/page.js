@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Subheading from "../../Components/Subheading";
+import Subheading from "../../../Components/Subheading";
 import axios from "axios";
-import ReservationCard from "@/app/Components/reservationCard";
+import ReservationCard from "@/Components/reservationCard";
 import { Spin } from "antd";
 import { Label, Modal } from "flowbite-react";
-import Button from "@/app/Components/Button";
+import Button from "@/Components/Button";
 import { useRouter } from "next/navigation";
 
 const Page = () => {

@@ -1,7 +1,7 @@
 import { Poppins } from "next/font/google";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./redux/provider";
+import { Providers } from "../redux/provider";
 
 const poppins = Poppins({
   subsets: ["latin"],

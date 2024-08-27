@@ -1,14 +1,14 @@
 "use client";
-import Button from "@/app/Components/Button";
-import CategoryCard from "@/app/Components/CategoryCard";
-import Subheading from "@/app/Components/Subheading";
+import Button from "@/Components/Button";
+import CategoryCard from "@/Components/CategoryCard";
+import Subheading from "@/Components/Subheading";
 import { Modal, Label } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Spin, Table } from "antd";
 import { MdDelete } from "react-icons/md";
 import { LuPencil } from "react-icons/lu";
-import EditModal from "@/app/Components/EditModal";
+import EditModal from "@/Components/EditModal";
 
 const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +32,7 @@ const Page = () => {
     name: "",
     price: 0,
     availability: "",
-    category: "",
+    categoryId: 0,
     description: "",
   });
 
@@ -58,6 +58,13 @@ const Page = () => {
 
   const handleItemChange = (e) => {
     const { id, value } = e.target;
+    console.log(
+      "I AM GETTING CANGED : ",
+      id,
+      "---------------",
+      value,
+      typeof value
+    );
     setItemData({ ...itemData, [id]: value });
   };
 
@@ -125,7 +132,7 @@ const Page = () => {
       setLoadingItem(true);
       const res = await axios.get("http://localhost:4000/items");
       setItems(res.data);
-      console.log(items);
+      console.log("-------------ss-s-s-", res.data);
     } catch (err) {
       console.log(err);
     } finally {
@@ -162,33 +169,19 @@ const Page = () => {
     }
   };
   const handleItemSubmit = async (e) => {
-    console.log("item");
     e.preventDefault();
 
     try {
-      const itemDataToSend = new FormData();
-      if (photo) {
-        itemDataToSend.append("file", photo);
-      }
-      console.log(itemData.price);
-      const item = itemData.price;
-      console.log(typeof item);
-      itemDataToSend.append("name", itemData.name);
-      itemDataToSend.append("price", parseInt(item));
-      itemDataToSend.append("description", itemData.description);
-      itemDataToSend.append("availability", itemData.availability);
-      itemDataToSend.append("categoryId", itemData.category);
-      console.log("PRICE : ", typeof itemDataToSend.price);
-      console.log("Data Object : ", itemDataToSend);
       console.log("ITEM DATA: ", itemData);
+      console.log(categories);
+      const parsedData = {
+        ...itemData,
+        price: Number(itemData.price),
+        categoryId: Number(itemData.categoryId),
+      };
       const response = await axios.post(
         "http://localhost:4000/items",
-        itemDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        parsedData
       );
 
       console.log(response.data);
@@ -198,7 +191,7 @@ const Page = () => {
         name: "",
         price: 0,
         availability: "",
-        category: "",
+        categoryId: 0,
         description: "",
       });
       getitems();
@@ -219,7 +212,7 @@ const Page = () => {
     name: "",
     price: 0,
     availability: "",
-    category: "",
+    categoryId: 0,
     description: "",
   });
 
@@ -235,7 +228,7 @@ const Page = () => {
         name: selectedItem.name || "",
         price: selectedItem.price || 0,
         availability: selectedItem.availability || "",
-        category: selectedItem.category || "",
+        categoryId: selectedItem.categoryId || 0,
         description: selectedItem.description || "",
       });
 
@@ -249,28 +242,21 @@ const Page = () => {
     e.preventDefault();
 
     try {
-      const edititemDataToSend = new FormData();
-      if (photo) {
-        edititemDataToSend.append("file", photo);
-      }
-      console.log("update",itemData.price);
-      const item = edititemData.price;
-      console.log(typeof item);
-      edititemDataToSend.append("name", edititemData.name);
-      edititemDataToSend.append("price", parseInt(item));
-      edititemDataToSend.append("description", edititemData.description);
-      edititemDataToSend.append("availability", edititemData.availability);
-      edititemDataToSend.append("categoryId", edititemData.category);
-      console.log("Data Object : ", edititemDataToSend);
+      // if (photo) {
+      //   edititemDataToSend.append("file", photo);
+      // }
+      console.log("update", itemData.price);
+
+      const parsedData = {
+        ...edititemData,
+        price: Number(edititemData.price),
+        categoryId: Number(edititemData.categoryId),
+      };
+
       console.log("ITEM DATA: ", edititemData);
       const response = await axios.patch(
         `http://localhost:4000/items/${selectedItem.id}`,
-        edititemDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        parsedData
       );
 
       console.log(response.data);
@@ -281,7 +267,7 @@ const Page = () => {
         name: "",
         price: 0,
         availability: "",
-        category: "",
+        categoryId: 0,
         description: "",
       });
 
@@ -493,9 +479,9 @@ const Page = () => {
                   className="text-white"
                 />
                 <select
-                  id="category"
+                  id="categoryId"
                   placeholder="Select Category"
-                  value={itemData.category} // Assuming you want to store the selected category in itemData.category
+                  value={itemData.categoryId} // Assuming you want to store the selected category in itemData.category
                   onChange={handleItemChange}
                   required
                   className="bg-input h-12 p-3 rounded-md w-full"
@@ -664,12 +650,12 @@ const Page = () => {
               </div>
               <div className="col-span-2">
                 <Label
-                  htmlFor="menu"
+                  htmlFor="Availabilty"
                   value="Availabilty"
                   className="text-white"
                 />
                 <select
-                  id="`availability"
+                  id="availability"
                   placeholder="Select Availabilty"
                   value={edititemData.availability}
                   onChange={handleEditItemChange}
@@ -688,9 +674,9 @@ const Page = () => {
                   className="text-white"
                 />
                 <select
-                  id="category"
+                  id="categoryId"
                   placeholder="Select Category"
-                  value={edititemData.category} // Assuming you want to store the selected category in itemData.category
+                  value={edititemData.categoryId} // Assuming you want to store the selected category in itemData.category
                   onChange={handleEditItemChange}
                   required
                   className="bg-input h-12 p-3 rounded-md w-full"

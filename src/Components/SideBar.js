@@ -2,7 +2,7 @@ import React from "react";
 
 import Logout from "./Logout";
 import Tab from "./Tab";
-import { SideBarArray } from "../../../public/array";
+import { SideBarArray } from "../../public/array";
 
 const SideBar = ({ array }) => {
   return (

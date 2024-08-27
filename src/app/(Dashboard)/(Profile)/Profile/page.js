@@ -1,5 +1,5 @@
 "use client";
-import Heading2 from "@/app/Components/Heading2";
+import Heading2 from "@/Components/Heading2";
 import axios from "axios";
 import { Label } from "flowbite-react";
 
