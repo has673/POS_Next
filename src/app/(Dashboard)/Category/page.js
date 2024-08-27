@@ -11,6 +11,7 @@ import { LuPencil } from "react-icons/lu";
 import EditModal from "@/Components/EditModal";
 
 const Page = () => {
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isitemModalOpen, setIsItemModalOpen] = useState(false);
   const [iseditModalOpen, setIsEditModalOpen] = useState(false);
@@ -127,7 +128,7 @@ const Page = () => {
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const result = await axios.get("http://localhost:4000/categories");
+      const result = await axios.get(`${Url}/categories`);
       setCategories(result.data);
       console.log(result);
     } catch (err) {
@@ -139,7 +140,7 @@ const Page = () => {
   const getitems = async () => {
     try {
       setLoadingItem(true);
-      const res = await axios.get("http://localhost:4000/items");
+      const res = await axios.get(`${Url}/items`);
       setItems(res.data);
       console.log("-------------ss-s-s-", res.data);
     } catch (err) {

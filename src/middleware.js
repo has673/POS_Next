@@ -20,5 +20,10 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/Staff/:path*", "/Reservation/:id*"], // Adjust this to match your protected routes
+  matcher: [
+    "/Staff/:path*",
+    "/Reservation/:id*",
+    "/Category/:path*",
+    "/Dashboard/:path*",
+  ], // Adjust this to match your protected routes
 };

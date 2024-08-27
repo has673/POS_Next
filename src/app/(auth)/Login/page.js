@@ -17,7 +17,7 @@ import {
   loginStart,
   loginSuccess,
 } from "../../../redux/slices/userslice";
-import { toast } from "react-toastify";
+
 import Cookies from "js-cookie";
 
 const page = () => {
@@ -56,11 +56,11 @@ const page = () => {
       console.log(response.data);
 
       dispatch(loginSuccess(response.data));
-      toast("logged_in");
-      router.push("/Dashboard");
+
+      router.push("/Staff");
     } catch (err) {
       console.log(err);
-      toast.error("an error occured");
+
       dispatch(loginFailure());
     }
   };

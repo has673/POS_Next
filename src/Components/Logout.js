@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/userslice";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Logout = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const Logout = () => {
   // const currentUser = useSelector((state) => state.user.currentUser);
   const onClick = () => {
     dispatch(logout());
+    Cookies.remove("token");
   };
   return (
     <button onClick={onClick}>
