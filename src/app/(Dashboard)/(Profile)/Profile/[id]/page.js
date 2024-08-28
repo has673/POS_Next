@@ -1,5 +1,5 @@
 "use client";
-import Heading2 from "@/Components/Heading2";
+
 import axios from "axios";
 import { Label } from "flowbite-react";
 import Cookies from "js-cookie";
@@ -58,10 +58,10 @@ const page = ({ params }) => {
   };
   const discard = (e) => {
     setUserData({
-      name: "",
+      username: "",
       email: "",
       address: "",
-    }); //
+    });
   };
   return (
     <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 mr-4 text-white ">
@@ -83,7 +83,7 @@ const page = ({ params }) => {
         <Label htmlFor="email" value="Email" className="text-white" />
         <div>
           <input
-            id="name"
+            id="email"
             placeholder="hoh@example.com"
             required
             value={userdata.email}
