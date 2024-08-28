@@ -10,7 +10,7 @@ const UserCard = ({ user }) => {
       <div className="flex justify-start p-4 gap-4">
         <h2>{user.username}</h2>
 
-        <div className="bg-pink text-black p-3">
+        <div className="bg-pink text-black p-2 text-sm">
           <p>{user.role}</p>
         </div>
       </div>
