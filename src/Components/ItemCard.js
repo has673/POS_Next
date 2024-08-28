@@ -8,30 +8,13 @@ const ItemCard = ({ item }) => {
       id="card"
       className="w-catCard h-itemCard bg-dark p-3 rounded-md cursor-pointer text-sm"
     >
-      <h3 className="text-gray">Order Khitchen</h3>
-      <div className=" flex justify-end">
+      <h3 className="text-gray text-xs">Order Khitchen</h3>
+      <div className=" flex justify-end text-sm"></div>
+      <div className="mt-18">
         {" "}
-        {item.photo ? (
-          <Image
-            src={item.photo}
-            width={25}
-            height={25}
-            alt="all"
-            className="w-auto h-auto"
-          />
-        ) : (
-          <Image
-            src="/icon.png"
-            width={25}
-            height={30}
-            alt="all"
-            className="w-auto h-auto"
-          />
-        )}
+        <p className="text-xs">{item.name}</p>
+        <p className="text-xs">{item.price}</p>
       </div>
-
-      <p>{item.name}</p>
-      <p>{item.price}</p>
     </div>
   );
 };

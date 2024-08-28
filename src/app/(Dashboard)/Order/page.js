@@ -50,7 +50,7 @@ const page = () => {
         </div>
 
         <Spin spinning={loadingitems}>
-          <div className="grid grid-cols-3 gap-6 mt-5 text-white place-content-center justify-items-center">
+          <div className="grid grid-cols-4 gap-6 mt-5 text-white place-content-center justify-items-center">
             {items.map((item) => (
               <ItemCard key={item.id} item={item} />
             ))}

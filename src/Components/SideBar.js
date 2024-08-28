@@ -6,7 +6,7 @@ import { SideBarArray } from "../../public/array";
 
 const SideBar = ({ array }) => {
   return (
-    <div className="bg-bg h-nav w-nav  rounded-tl-lg rounded-bl-sm flex flex-col ">
+    <div className="bg-bg h-nav w-nav  rounded-tr-md rounded-br-sm flex flex-col ">
       <h2 className="text-pink tracking-normal text-center my-5 bg-bg">
         CYPSOS
       </h2>

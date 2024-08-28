@@ -64,7 +64,7 @@ const page = ({ params }) => {
     }); //
   };
   return (
-    <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 mr-4 text-white">
+    <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 mr-4 text-white ">
       <h2 className="ml-8 text-white p-3">Personal Information</h2>
       <div className="ml-8 mt-5">
         <Label htmlFor="name" value="Name" className="text-white" />
@@ -106,7 +106,7 @@ const page = ({ params }) => {
         </div>
       </div>
 
-      <div className="flex justify-end mr-10 mt-3 space-x-2">
+      <div className="flex justify-end mr-10 mt-14 p-6 space-x-2">
         <p
           className="text-white underline hover:text-black cursor-pointer p-2"
           onClick={discard}
