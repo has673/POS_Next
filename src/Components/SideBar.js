@@ -13,10 +13,6 @@ const SideBar = ({ array }) => {
 
       <div className="mb-20">
         {array.map((item, index) => (
-          // <div key={index} id='tab'className="flex flex-col items-center h-11 mb-4 w-full bg-inherit cursor-pointer">
-          //   <img src={item.imageUrl} alt={`Image ${index}`}   id='img'/>
-          //   <p  className="text-center text-white text-xs">{item.text} </p>
-          // </div>
           <Tab
             key={index}
             imageUrl={item.imageUrl}
