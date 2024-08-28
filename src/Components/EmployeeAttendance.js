@@ -1,12 +1,10 @@
 "use client";
-import { Select } from "antd";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-import { FaEye } from "react-icons/fa";
-
 // Custom Table component with pagination
-const EmployeeAttendance = ({ data, onRemove }) => {
+const EmployeeAttendance = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 9;
@@ -19,7 +17,6 @@ const EmployeeAttendance = ({ data, onRemove }) => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentData = data.slice(indexOfFirstItem, indexOfLastItem);
-  const router = useRouter();
 
   // Handle page change
   const handlePageChange = (pageNumber) => {
@@ -30,16 +27,21 @@ const EmployeeAttendance = ({ data, onRemove }) => {
     return <p className="text-white">No data available.</p>;
   }
 
-  const singlePage = (id) => {
-    router.push(`Staff/${id}`);
-  };
   const handleChange = (e) => {
     const { id, value } = e.target;
     setStatus({ ...status, [id]: value });
   };
-  const onClick = async () => {
+  const onClick = async (id) => {
     try {
-    } catch (err) {}
+      const response = await axios.patch(
+        `http://localhost:4000/employees/${id}/attendance`,
+
+        status
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>
@@ -68,7 +70,11 @@ const EmployeeAttendance = ({ data, onRemove }) => {
                 <td className="py-2 px-4 border-r">{employee.Name}</td>
 
                 <td className="py-2 px-4 border-r">
-                  <select id="status" onChange={handleChange} className="w-40">
+                  <select
+                    id="status"
+                    onChange={handleChange}
+                    className="w-40 bg-bg text-white"
+                  >
                     <option value="PRESENT">Present</option>
                     <option value="ABSENT">Absent</option>
                     <option value="HALF_LEAVE">Half Leave</option>
@@ -79,11 +85,11 @@ const EmployeeAttendance = ({ data, onRemove }) => {
                 <td className="py-2 px-4">
                   <button
                     onClick={() => {
-                      singlePage(employee.id);
+                      onClick(employee.id);
                     }}
                     className="text-white hover:text-red-300 ml-5"
                   >
-                    <FaEye />
+                    Submit
                   </button>
                 </td>
               </tr>
@@ -112,7 +118,6 @@ const EmployeeAttendance = ({ data, onRemove }) => {
             Next
           </button>
         </div>
-        <button title="Submit" />
       </div>
     </>
   );

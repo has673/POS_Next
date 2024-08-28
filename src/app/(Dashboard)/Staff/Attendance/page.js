@@ -24,11 +24,9 @@ const Page = () => {
       try {
         setLoading(true);
         const token = Cookies.get("token");
-        const response = await axios.get("http://localhost:4000/employees", {
-          headers: {
-            Authorization: token,
-          },
-        });
+        const response = await axios.get(
+          "http://localhost:4000/employees/get/attendance"
+        );
         const result = response.data;
         setData(result);
         setCount(result.length);
@@ -43,11 +41,16 @@ const Page = () => {
   }, []);
 
   // Function to handle removal of an employee
-
+  const date = new Date();
+  console.log(date);
   return (
     <div className="p-4 bg-black w-full text-white">
       <div>
         <Subheading title="Attendance" />
+      </div>
+      <div className="flex gap-4 justify-center">
+        <h3>Date :</h3>
+        <h3>{date.toLocaleString()}</h3>
       </div>
 
       <Spin spinning={loading}>
