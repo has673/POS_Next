@@ -2,22 +2,25 @@
 import Heading2 from "@/Components/Heading2";
 import axios from "axios";
 import { Label } from "flowbite-react";
+import Cookies from "js-cookie";
 
 import React, { useEffect, useState } from "react";
 
 const page = ({ params }) => {
   const { id } = params;
   const [userdata, setUserData] = useState({
-    name: "",
+    username: "",
     email: "",
     address: "",
-    password: "",
   });
   const getUser = async (id) => {
     try {
-      const res = await axios.get(
-        `http://localhost:4000/auth/login/getProfile${id}`
-      );
+      const token = Cookies.get("token");
+      const res = await axios.get(`http://localhost:4000/auth/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setUserData(res.data);
       console.log(userdata);
     } catch (err) {
@@ -28,14 +31,20 @@ const page = ({ params }) => {
     getUser(id);
   }, [id]);
   const handleSubmit = async (e) => {
-    e.preventDefult();
+    e.preventDefault();
+    const token = Cookies.get("token");
     try {
       const response = await axios.put(
-        `http://localhost:4000/auth/login/updateProfile${id}`,
-        userdata
+        `http://localhost:4000/auth/${id}`,
+        userdata,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
       );
       console.log(response.data);
-      getUser();
+      getUser(id);
     } catch (err) {
       console.log(err);
     }
@@ -52,20 +61,19 @@ const page = ({ params }) => {
       name: "",
       email: "",
       address: "",
-      password: "",
     }); //
   };
   return (
-    <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 mr-4">
+    <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 mr-4 text-white">
       <h2 className="ml-8 text-white p-3">Personal Information</h2>
       <div className="ml-8 mt-5">
         <Label htmlFor="name" value="Name" className="text-white" />
         <div>
           <input
-            id="name"
+            id="username"
             placeholder="Enter name"
             required
-            value={userdata.name}
+            value={userdata.username}
             onChange={onChange}
             className="bg-input h-12 p-3 rounded-md w-5/6"
           />
@@ -85,11 +93,11 @@ const page = ({ params }) => {
         </div>
       </div>
       <div className="ml-8 mt-5">
-        <Label htmlFor="email" value="Address" className="text-white" />
+        <Label htmlFor="address" value="Address" className="text-white" />
         <div>
           <input
-            id="addrress"
-            placeholder="hoh@example.com"
+            id="address"
+            placeholder="Address"
             required
             value={userdata.address}
             className="bg-input h-12 p-3 rounded-md w-5/6"
@@ -98,19 +106,6 @@ const page = ({ params }) => {
         </div>
       </div>
 
-      <div className="ml-8 mt-5">
-        <Label htmlFor="email" value="Password" className="text-white" />
-        <div>
-          <input
-            id="password"
-            placeholder="Enter password"
-            required
-            value={userdata.password}
-            className="bg-input h-12 p-3 rounded-md w-5/6"
-            onChange={onChange}
-          />
-        </div>
-      </div>
       <div className="flex justify-end mr-10 mt-3 space-x-2">
         <p
           className="text-white underline hover:text-black cursor-pointer p-2"
@@ -118,7 +113,12 @@ const page = ({ params }) => {
         >
           Discard Changes
         </p>
-        <button className="bg-pink text-black w-2/12 p-2">Update</button>
+        <button
+          className="bg-pink text-black w-2/12 p-2"
+          onClick={handleSubmit}
+        >
+          Update
+        </button>
       </div>
     </div>
   );

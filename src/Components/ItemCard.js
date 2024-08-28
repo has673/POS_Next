@@ -12,9 +12,21 @@ const ItemCard = ({ item }) => {
       <div className=" flex justify-end">
         {" "}
         {item.photo ? (
-          <Image src={item.photo} width={25} height={25} alt="all" />
+          <Image
+            src={item.photo}
+            width={25}
+            height={25}
+            alt="all"
+            className="w-auto h-auto"
+          />
         ) : (
-          <Image src="/icon.png" width={25} height={30} alt="all" />
+          <Image
+            src="/icon.png"
+            width={25}
+            height={30}
+            alt="all"
+            className="w-auto h-auto"
+          />
         )}
       </div>
 

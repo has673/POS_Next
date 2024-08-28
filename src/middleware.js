@@ -1,6 +1,12 @@
 // middleware.ts
+
 import { NextResponse } from "next/server";
+
+import { Josefin_Sans } from "next/font/google";
+import { decodeJwt } from "jose";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setUserData } from "./redux/slices/userslice";
 
 export function middleware(request) {
   const token = request.cookies.get("token")?.value;
@@ -12,6 +18,13 @@ export function middleware(request) {
   try {
     // Verify the token here if needed
     // If token is invalid, redirect to login
+    const decoded = decodeJwt(token);
+    const { userId, role } = decoded;
+    // dispatch(setUserData(userId, role));
+    console.log(userId);
+    Cookies.set("userId", userId);
+    console.log(role);
+    console.debug("auth midlleware");
   } catch (error) {
     return NextResponse.redirect(new URL("/Login", request.url));
   }
@@ -20,5 +33,10 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/Staff/:path*", "/Reservation/:id*"], // Adjust this to match your protected routes
+  matcher: [
+    "/Staff/:path*",
+    "/Reservation/:id*",
+    "/Category/:path*",
+    "/Dashboard/:path*",
+  ], // Adjust this to match your protected routes
 };
