@@ -35,8 +35,8 @@ export function middleware(request) {
 export const config = {
   matcher: [
     "/Staff/:path*",
-    "/Reservation/:id*",
     "/Category/:path*",
+    "/Reservation/:path8",
     "/Dashboard/:path*",
   ], // Adjust this to match your protected routes
 };

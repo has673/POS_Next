@@ -1,4 +1,5 @@
 "use client";
+import Button from "@/Components/Button";
 import CategoryCard from "@/Components/CategoryCard";
 import ItemCard from "@/Components/ItemCard";
 import { Spin } from "antd";
@@ -50,6 +51,12 @@ const page = () => {
         </div>
 
         <Spin spinning={loadingitems}>
+          <div className="flex justify-between space-x-3">
+            <h3 className="text-white ml-5">Orders</h3>
+            <button className="bg-pink text-black p-3 mr-5">
+              Create Order
+            </button>
+          </div>
           <div className="grid grid-cols-4 gap-6 mt-5 text-white place-content-center justify-items-center">
             {items.map((item) => (
               <ItemCard key={item.id} item={item} />

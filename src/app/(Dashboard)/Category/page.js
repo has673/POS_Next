@@ -5,10 +5,9 @@ import Subheading from "@/Components/Subheading";
 import { Modal, Label } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Spin, Table } from "antd";
+import { Spin } from "antd";
 import { MdDelete } from "react-icons/md";
 import { LuPencil } from "react-icons/lu";
-import EditModal from "@/Components/EditModal";
 
 const Page = () => {
   const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
