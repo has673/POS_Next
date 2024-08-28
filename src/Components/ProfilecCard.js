@@ -12,7 +12,7 @@ const ProfilecCard = () => {
         className="flex gap-2  items-center cursor-pointer rounded-sm"
       >
         <MdPerson />
-        <Link href="Profile">
+        <Link href="/">
           <h3>Profile</h3>
         </Link>
       </div>

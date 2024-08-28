@@ -106,7 +106,7 @@ const page = ({ params }) => {
         </div>
       </div>
 
-      <div className="flex justify-end mr-10 mt-14 p-6 space-x-2">
+      <div className="flex justify-end mr-10 mt-7 p-4 space-x-2">
         <p
           className="text-white underline hover:text-black cursor-pointer p-2"
           onClick={discard}
