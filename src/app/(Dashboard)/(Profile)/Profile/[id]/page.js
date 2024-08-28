@@ -44,7 +44,7 @@ const page = ({ params }) => {
         }
       );
       console.log(response.data);
-      getUser(i);
+      getUser(id);
     } catch (err) {
       console.log(err);
     }
@@ -61,11 +61,10 @@ const page = ({ params }) => {
       name: "",
       email: "",
       address: "",
-      password: "",
     }); //
   };
   return (
-    <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 mr-4">
+    <div className="bg-bg w-sixtyvw h-card rounded-md mt-18 mr-4 text-white">
       <h2 className="ml-8 text-white p-3">Personal Information</h2>
       <div className="ml-8 mt-5">
         <Label htmlFor="name" value="Name" className="text-white" />
@@ -94,11 +93,11 @@ const page = ({ params }) => {
         </div>
       </div>
       <div className="ml-8 mt-5">
-        <Label htmlFor="email" value="Address" className="text-white" />
+        <Label htmlFor="address" value="Address" className="text-white" />
         <div>
           <input
-            id="addrress"
-            placeholder="hoh@example.com"
+            id="address"
+            placeholder="Address"
             required
             value={userdata.address}
             className="bg-input h-12 p-3 rounded-md w-5/6"
