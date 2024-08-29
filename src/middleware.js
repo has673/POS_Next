@@ -1,13 +1,6 @@
-// middleware.ts
-
 import { NextResponse } from "next/server";
-
-import { Josefin_Sans } from "next/font/google";
 import { decodeJwt } from "jose";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
-import { setUserData } from "./redux/slices/userslice";
-
 export function middleware(request) {
   const token = request.cookies.get("token")?.value;
 
@@ -16,13 +9,10 @@ export function middleware(request) {
   }
 
   try {
-    // Verify the token here if needed
-    // If token is invalid, redirect to login
     const decoded = decodeJwt(token);
     const { userId, role } = decoded;
-    // dispatch(setUserData(userId, role));
     console.log(userId);
-    Cookies.set("userId", userId);
+    Cookies.set("userId", user);
     console.log(role);
     console.debug("auth midlleware");
   } catch (error) {

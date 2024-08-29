@@ -2,7 +2,7 @@ import React from "react";
 import { Radio, Switch, ConfigProvider } from "antd";
 
 // Assuming toggleArray is correctly imported or defined elsewhere
-const toggleArray = ["Dashboard", "Inventory", "Orders"];
+const toggleArray = ["Category", "Staff", "Reservation"];
 
 const UserCard = ({ user }) => {
   return (
