@@ -11,8 +11,6 @@ export function middleware(request) {
   try {
     const decoded = decodeJwt(token);
     const { userId, role } = decoded;
-    console.log(userId);
-    Cookies.set("userId", user);
     console.log(role);
     console.debug("auth midlleware");
   } catch (error) {
@@ -26,7 +24,7 @@ export const config = {
   matcher: [
     "/Staff/:path*",
     "/Category/:path*",
-    "/Reservation/:path8",
+    "/Reservation/:path*",
     "/Dashboard/:path*",
   ], // Adjust this to match your protected routes
 };

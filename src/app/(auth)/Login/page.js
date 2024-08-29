@@ -21,13 +21,12 @@ import {
 import Cookies from "js-cookie";
 
 const page = () => {
-  const router = useRouter();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  // const router = useRouter();
+  const router = useRouter();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -56,7 +55,6 @@ const page = () => {
       console.log(response.data);
 
       dispatch(loginSuccess(response.data));
-
       router.push("/Staff");
     } catch (err) {
       console.log(err);
