@@ -3,15 +3,21 @@ import AddCard from "@/Components/AddCard";
 import UserCard from "@/Components/UserCard";
 import { Spin } from "antd";
 import axios from "axios";
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 
 const page = () => {
   const [users, setUsers] = useState([]);
   const [Loading, setLoading] = useState(false);
+  const token = Cookies.get("token");
   const getUsers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:4000/auth");
+      const response = await axios.get("http://localhost:4000/auth", {
+        headers: {
+          Authorization: token,
+        },
+      });
       setUsers(response.data);
     } catch (err) {
       console.log(err);
