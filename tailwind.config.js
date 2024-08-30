@@ -35,7 +35,7 @@ module.exports = {
         fivevh: "5vh",
         threevh: "4vh",
         card: "60vh",
-        itemCard: "7vh",
+        itemCard: "10vh",
         catCardSmall: "10vh",
       },
       width: {
@@ -46,7 +46,7 @@ module.exports = {
         card: "750px",
         popup: "640px",
         catCard: "10vw",
-        catCardSmall: "7.5vw",
+        catCardSmall: "8vw",
         img: "70vw",
         sixtyvw: "50vw",
         "60vw": "60vw",

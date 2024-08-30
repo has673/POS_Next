@@ -23,6 +23,9 @@
   #hover:hover {
     @apply bg-pink text-black;
   }
+  #add:hover {
+    @apply bg-bg text-white;
+  }
 }
 
 * {

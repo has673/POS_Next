@@ -16,6 +16,7 @@ const inter = Inter({
 export const metadata = {
   title: "CYPSOS",
   description: "Point of Sale",
+  other: { pinterest: "nopin" },
 };
 
 export default function RootLayout({ children }) {
