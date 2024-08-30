@@ -52,7 +52,9 @@ const page = () => {
     <>
       <Head>
         <title>Orders</title>
-        <meta property="og:title" content="Order" key="title" />
+
+        <meta name="description" />
+        <link rel="icon" href="/download.png" />
       </Head>
       <div className="bg-black w-full flex justify-center">
         <div className="w-2/3">
