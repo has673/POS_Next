@@ -6,6 +6,8 @@ const initialState = {
   error: false,
   id: null,
   role: null,
+  allowStaff: null,
+  allowCategory: null,
 };
 
 export const userSlice = createSlice({
@@ -29,8 +31,10 @@ export const userSlice = createSlice({
       state.error = false;
     },
     setUserData: (state, action) => {
-      state.id = action.payload;
-      StarRate.role = action.payload;
+      state.id = action.payload.userId;
+      state.role = action.payload.role;
+      state.allowCategory = action.payload.allowCategory;
+      state.allowStaff = action.payload.allowStaff;
     },
   },
 });

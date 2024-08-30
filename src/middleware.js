@@ -9,9 +9,9 @@ export function middleware(request) {
   }
 
   try {
-    const decoded = decodeJwt(token);
-    const { userId, role } = decoded;
-    console.log(role);
+    // const decoded = decodeJwt(token);
+    // const { userId, role } = decoded;
+    // console.log(role);
     console.debug("auth midlleware");
   } catch (error) {
     return NextResponse.redirect(new URL("/Login", request.url));

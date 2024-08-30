@@ -86,7 +86,9 @@ const Page = () => {
           <div className="w-full max-w-6xl">
             <button
               className="mr-5 my-5 bg-pink text-black p-2"
-              onClick={attendancePage()}
+              onClick={() => {
+                attendancePage();
+              }}
             >
               Attendance
             </button>
