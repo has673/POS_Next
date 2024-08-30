@@ -77,7 +77,9 @@ const page = () => {
             </Spin>
           </Spin>
         </div>
-        <div className="w-1/4 bg-bg h-2/3 m-6 rounded-md"> </div>
+        <div className="w-1/4 bg-bg h-2/3 m-6 my-5 rounded-md flex items-center">
+          {" "}
+        </div>
       </div>
     </>
   );
