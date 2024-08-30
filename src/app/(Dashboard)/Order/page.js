@@ -131,39 +131,41 @@ const Page = () => {
             <p>Nothin</p>
           ) : (
             <>
-              <div>
-                <Label htmlFor="Table" value="Table" className="text-white" />
-                <select
-                  id="reservation.tableNumber"
-                  placeholder="Select table"
-                  // value={reservationData.reservation.tableNumber}
-                  // onChange={handleChange}
-                  required
-                  className="bg-input h-12 p-3 rounded-md w-full"
-                >
-                  <option value="">Select Table</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </select>
-              </div>
-              <div>
-                <Label htmlFor="Table" value="Floor" className="text-white" />
-                <select
-                  id="reservation.tableNumber"
-                  placeholder="Select table"
-                  // value={reservationData.reservation.tableNumber}
-                  // onChange={handleChange}
-                  required
-                  className="bg-input h-12 p-3 rounded-md w-full"
-                >
-                  <option value="">Select Floor</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </select>
+              <div className="flex justify-between mt-9 gap-2">
+                <div>
+                  <Label htmlFor="Table" value="Table" className="text-white" />
+                  <select
+                    id="reservation.tableNumber"
+                    placeholder="Select table"
+                    // value={reservationData.reservation.tableNumber}
+                    // onChange={handleChange}
+                    required
+                    className="bg-input h-12 p-3 rounded-md w-full"
+                  >
+                    <option value="">Select Table</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+                <div>
+                  <Label htmlFor="Table" value="Floor" className="text-white" />
+                  <select
+                    id="reservation.tableNumber"
+                    placeholder="Select table"
+                    // value={reservationData.reservation.tableNumber}
+                    // onChange={handleChange}
+                    required
+                    className="bg-input h-12 p-3 rounded-md w-full"
+                  >
+                    <option value="">Select Floor</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
               </div>
             </>
           )}
