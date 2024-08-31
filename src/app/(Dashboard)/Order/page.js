@@ -1,6 +1,8 @@
 "use client";
 import Button from "@/Components/Button";
 import Heading from "@/Components/Heading";
+import OrderCard from "@/Components/orderCard";
+
 import Subheading from "@/Components/Subheading";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -32,12 +34,14 @@ const page = () => {
         <Subheading title="Order" />
         <button
           id="button"
-          className="bg-pink h-15 w-auto p-2 rounded-sm text-black"
+          className="bg-pink h-15 w-auto p-2 rounded-sm text-black mr-4 mt-3"
           onClick={() => handleClick}
         >
-          Add Order
+          Add New Order
         </button>
       </div>
+
+      <OrderCard />
     </div>
   );
 };
