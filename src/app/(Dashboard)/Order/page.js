@@ -60,7 +60,7 @@ const page = () => {
         </button>
       </div>
       <Spin spinning={loading}>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-2 mt-2 align-middle">
           {currentData.map((order) => (
             <OrderCard key={order.id} order={order} />
           ))}
