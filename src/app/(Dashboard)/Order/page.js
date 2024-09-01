@@ -7,26 +7,27 @@ import Subheading from "@/Components/Subheading";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
   const router = useRouter();
+  const [orders, setOrders] = useState([]);
   const handleClick = () => {
     router.push("/CreateOrder");
   };
   const getData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:4000/categories/Order"
-      );
+      const response = await axios.get("http://localhost:4000/order");
       console.log(response);
+      setOrders(response.data);
     } catch (err) {
       console.log(err);
     }
-    useEffect(() => {
-      getData();
-    }, []);
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="bg-black w-full text-white">
@@ -40,8 +41,11 @@ const page = () => {
           Add New Order
         </button>
       </div>
-
-      <OrderCard />
+      <div className="grid grid-cols-3 gap-2">
+        {orders.map((order) => (
+          <OrderCard key={order.id} order={order} />
+        ))}
+      </div>
     </div>
   );
 };

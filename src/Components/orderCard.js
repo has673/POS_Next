@@ -8,7 +8,7 @@ const OrderCard = ({ order }) => {
       <div className="flex justify-between gap-2">
         <div className="flex justify-center gap-2">
           <h2 className="bg-pink rounded-sm text-black w-auto p-1 m-1 h-auto">
-            2
+            {order.id}
           </h2>
           <div>
             <p>Customer</p>
@@ -33,9 +33,19 @@ const OrderCard = ({ order }) => {
           </select>
         </div>
       </div>
-      <div className="flex justify-between my-2 mx-2">
-        <p>Date</p>
-        <p>time</p>
+      <div className="flex justify-between my-2 mx-2 text-white text-sm ">
+        <p>
+          {" "}
+          {order.createdAt
+            ? new Date(order.createdAt).toLocaleDateString()
+            : "N / A"}
+        </p>
+        <p>
+          {" "}
+          {order.createdAt
+            ? new Date(order.createdAt).toLocaleTimeString()
+            : "N / A"}
+        </p>
       </div>
       <hr></hr>
       <div className="flex justify-between gap-2 text-white text-xs">
