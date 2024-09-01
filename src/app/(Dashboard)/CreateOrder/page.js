@@ -74,7 +74,7 @@ const Page = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setStatus({ ...status, [id]: value });
+    setStatus(value);
   };
   const handleCreateOrder = async () => {
     try {
@@ -83,10 +83,11 @@ const Page = () => {
         "http://localhost:4000/order",
         {
           customerId: 1,
-          status: status,
+          status: "IN_PROCESS",
           orderItems: orderItems.map((item) => ({
             productId: item.id,
             quantity: item.quantity,
+            name: item.name,
           })),
         },
         {
