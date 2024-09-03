@@ -5,10 +5,10 @@ import Subheading from "@/Components/Subheading";
 import { Modal, Label } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Spin, Table } from "antd";
+import { Spin } from "antd";
 import { MdDelete } from "react-icons/md";
 import { LuPencil } from "react-icons/lu";
-import EditModal from "@/Components/EditModal";
+import Cookies from "js-cookie";
 
 const Page = () => {
   const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
@@ -128,7 +128,12 @@ const Page = () => {
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const result = await axios.get(`${Url}/categories`);
+      const token = Cookies.get("token");
+      const result = await axios.get(`${Url}/categories`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setCategories(result.data);
       console.log(result);
     } catch (err) {

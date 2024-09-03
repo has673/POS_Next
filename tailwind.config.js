@@ -21,6 +21,7 @@ module.exports = {
         placeholderColor: "#777979",
         dark: "#333333",
         gray: "#777979",
+        green: "#E3FFE4",
       },
       height: {
         card: "50vh",
@@ -35,7 +36,8 @@ module.exports = {
         fivevh: "5vh",
         threevh: "4vh",
         card: "60vh",
-        itemCard: "12vh",
+        itemCard: "10vh",
+        catCardSmall: "10vh",
       },
       width: {
         card1: "30vw",
@@ -45,9 +47,11 @@ module.exports = {
         card: "750px",
         popup: "640px",
         catCard: "10vw",
+        catCardSmall: "8vw",
         img: "70vw",
         sixtyvw: "50vw",
         "60vw": "60vw",
+        "22vw": "22vw",
       },
       margin: {
         "6vw": "45vw",

@@ -21,18 +21,18 @@ export const SideBarArray = [
     text: "Reservation",
     route: "/Reservation",
   },
-  // {
-  //   imageUrl: "/icon.png",
-  //   text: "Items",
-  //   route: "/items",
-  // },
+  {
+    imageUrl: "/report.png",
+    text: "Reports",
+    route: "/Report",
+  },
   // {
   //   imageUrl: "/icon.png",
   //   text: "Admin",
   //   route: "/admin",
   // },
   {
-    imageUrl: "/icon.png",
+    imageUrl: "/order.png",
     text: "Orders",
     route: "/Order",
   },

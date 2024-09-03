@@ -1,10 +1,44 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Radio, Switch, ConfigProvider } from "antd";
 
+import Cookies from "js-cookie";
+import axios from "axios";
+
 // Assuming toggleArray is correctly imported or defined elsewhere
-const toggleArray = ["Dashboard", "Inventory", "Orders"];
+const toggleArray = ["Category", "Staff", "Reservation"];
 
 const UserCard = ({ user }) => {
+  const [toggleStates, setToggleStates] = useState({
+    allowCategoryModify: false,
+    allowStaffModify: false,
+    allowReservation: false,
+  });
+
+  // Handle toggle change
+  const handleToggleChange = (item) => {
+    setToggleStates((prevStates) => ({
+      ...prevStates,
+      [item]: !prevStates[item],
+    }));
+  };
+
+  const handleSubmit = async () => {
+    const token = Cookies.get("token");
+    try {
+      const response = await axios.patch(
+        ` http://localhost:4000/auth/${user.id}/accesschange`,
+        toggleStates,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="text-white">
       <div className="flex justify-start p-4 gap-4">
@@ -29,10 +63,23 @@ const UserCard = ({ user }) => {
                 },
               }}
             >
-              <Switch>{item}</Switch>
+              <Switch
+                checked={toggleStates[item]}
+                onChange={() => handleToggleChange(item)}
+              >
+                {item}
+              </Switch>
             </ConfigProvider>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center">
+        <button
+          className="bg-pink p-2 text-black rounded-sm w-auto my-3"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
       </div>
       <hr></hr>
     </div>
