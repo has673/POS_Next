@@ -7,6 +7,7 @@ import { Spin } from "antd";
 import { Label, Modal } from "flowbite-react";
 import Button from "@/Components/Button";
 import { useRouter } from "next/navigation";
+import MyCalendar from "@/Components/MyCalendar";
 
 const Page = () => {
   const router = useRouter();
@@ -120,6 +121,8 @@ const Page = () => {
           Add Reservation
         </button>
       </div>
+      <MyCalendar reservations={reservations} />
+
       <Modal
         show={isModalOpen}
         dismissible
