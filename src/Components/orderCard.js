@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { LuPen } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
 
 const OrderCard = ({ order }) => {
+  const [status, setStatus] = useState("");
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setStatus(value);
+  };
   return (
     <div className="bg-bg w-22vw rounded-sm ml-3 h-auto">
       <div className="flex justify-between gap-2">
@@ -17,12 +22,12 @@ const OrderCard = ({ order }) => {
         </div>
         <div>
           <div className="bg-green text-black text-center text-xs w-5/6 mt-3 rounded-sm">
-            status
+            {status}
           </div>
           <select
             id="status"
-            // value={status}
-            // onChange={handleChange}
+            value={status}
+            onChange={handleChange}
             required
             className=" rounded-md bg-bg mr-3 text-xs"
           >

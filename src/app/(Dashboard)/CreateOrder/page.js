@@ -83,7 +83,7 @@ const Page = () => {
         "http://localhost:4000/order",
         {
           customerId: 1,
-          status: "IN_PROCESS",
+          status: status,
           orderItems: orderItems.map((item) => ({
             productId: item.id,
             quantity: item.quantity,
@@ -165,17 +165,12 @@ const Page = () => {
             <>
               <div className="flex justify-between mt-9 gap-2">
                 <div>
-                  <Label
-                    htmlFor="status"
-                    value="status"
-                    className="text-white"
-                  />
                   <select
                     id="status"
                     value={status}
                     onChange={handleChange}
                     required
-                    className="bg-input h-12 p-3 rounded-md w-full"
+                    className=" rounded-md bg-bg mr-3 text-xs text-white"
                   >
                     <option value="">Set Status</option>
                     <option value="IN_PROCESS">In Process</option>
