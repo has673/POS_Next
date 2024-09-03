@@ -186,7 +186,7 @@ const Page = () => {
                 </div>
               </div>
               <button
-                className="bg-pink w-1/3 text-black p-1"
+                className="bg-pink w-1/3 text-black p-1 rounded-md"
                 onClick={() => dispatch(clearOrder())}
               >
                 Cancel
