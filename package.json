@@ -14,6 +14,8 @@
     "@mui/material-nextjs": "^5.16.6",
     "@nextui-org/table": "^2.0.39",
     "@reduxjs/toolkit": "^2.2.7",
+    "@stripe/react-stripe-js": "^2.8.0",
+    "@stripe/stripe-js": "^4.4.0",
     "antd": "^5.20.2",
     "axios": "^1.7.4",
     "cors": "^2.8.5",
