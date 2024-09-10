@@ -7,10 +7,7 @@ export default function layout({ children }) {
   return (
     <div className="flex flex-row">
       <Sidebar array={SideBarArray} />
-
       {children}
-
-      <div> Profile</div>
     </div>
   );
 }

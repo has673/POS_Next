@@ -10,7 +10,7 @@ import Modalform from "@/Components/Modalform";
 import { Spin } from "antd";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-
+import { CiUser } from "react-icons/ci";
 // Dynamic import
 const EmployeeTable = dynamic(
   () => import("../../../Components/EmployeeTable"),
@@ -68,9 +68,12 @@ const Page = () => {
   };
 
   return (
-    <div className="p-4 bg-black w-full text-white">
-      <div>
+    <div className="p-4 bg-black  w-full text-white">
+      <div className="flex justify-between">
         <Subheading title="Staff Management" />
+        <button className=" text-white mr-10 p-2 rounded-3xl bg-pink">
+          <CiUser size={24} />
+        </button>
       </div>
 
       <Spin spinning={loading}>
