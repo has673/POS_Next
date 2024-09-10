@@ -4,12 +4,13 @@ import Cookies from "js-cookie";
 import React from "react";
 
 const Page = async ({ params }) => {
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const { id } = params;
   let employee = null;
 
   try {
     const token = Cookies.get("token");
-    const response = await fetch(`http://localhost:4000/employees/${id}`, {
+    const response = await fetch(`${Url}/employees/${id}`, {
       headers: {
         Authorization: token,
       },

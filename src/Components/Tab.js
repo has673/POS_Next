@@ -8,7 +8,7 @@ const Tab = ({ imageUrl, text, route }) => {
     <Link href={route} passHref>
       <div
         id="tab"
-        className="flex flex-col items-center h-12 mb-4 w-full bg-inherit cursor-pointer"
+        className="flex flex-col items-center h-12 mb-4 w-full  cursor-pointer"
       >
         <img src={imageUrl} alt={text} />
         <p className="text-center text-white text-xs ">{text}</p>

@@ -10,8 +10,9 @@ import { useRouter } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,8 +46,8 @@ const page = () => {
     try {
       setLoading(true);
       const url = status
-        ? `http://localhost:4000/order/filter/status?status=${status}`
-        : "http://localhost:4000/order";
+        ? `${Url}/order/filter/status?status=${status}`
+        : `${Url}/order`;
       const response = await axios.get(url);
       setOrders(response.data);
     } catch (err) {
@@ -141,4 +142,4 @@ const page = () => {
     </div>
   );
 };
-export default page;
+export default Page;

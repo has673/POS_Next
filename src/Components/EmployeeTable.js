@@ -10,6 +10,7 @@ import Modalformupdate from "./Modalformupdate";
 const EmployeeTable = ({ data, onRemove }) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 5;

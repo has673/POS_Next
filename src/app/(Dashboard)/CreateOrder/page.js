@@ -25,7 +25,7 @@ const Page = () => {
   const [status, setStatus] = useState(""); // New state for status
   const [tableNumber, setTableNumber] = useState(""); // New state for tableNumber
   const [floor, setFloor] = useState(""); // New state for floor
-
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const dispatch = useDispatch();
   const orderItems = useSelector((state) => state.order.items);
   const totalPrice = useSelector((state) => state.order.totalPrice);
@@ -39,7 +39,7 @@ const Page = () => {
     const token = Cookies.get("token");
     try {
       setLoading(true);
-      const result = await axios.get("http://localhost:4000/categories", {
+      const result = await axios.get(`${Url}/categories`, {
         headers: {
           Authorization: token,
         },
@@ -55,7 +55,7 @@ const Page = () => {
   const fetchItems = async () => {
     try {
       setLoadingItems(true);
-      const result = await axios.get("http://localhost:4000/items");
+      const result = await axios.get(`${Url}/items`);
       setItems(result.data);
     } catch (err) {
       console.log(err);
@@ -80,7 +80,7 @@ const Page = () => {
     try {
       const token = Cookies.get("token");
       await axios.post(
-        "http://localhost:4000/order",
+        `${Url}/order`,
         {
           customerId: 1,
           status: status,

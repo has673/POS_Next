@@ -90,15 +90,11 @@ const Page = () => {
       formDataToSend.append("menu", formData.menu);
       formDataToSend.append("description", formData.description);
 
-      const response = await axios.post(
-        "http://localhost:4000/categories",
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${Url}/categories`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       console.log(response.data);
 
@@ -176,7 +172,7 @@ const Page = () => {
 
   const onRemove = async (id) => {
     try {
-      const res = axios.delete(`http://localhost:4000/items/${id}`);
+      const res = axios.delete(`${Url}/items/${id}`);
       console.log(res.data);
       getitems();
     } catch (err) {
@@ -194,10 +190,7 @@ const Page = () => {
         price: Number(itemData.price),
         categoryId: Number(itemData.categoryId),
       };
-      const response = await axios.post(
-        "http://localhost:4000/items",
-        parsedData
-      );
+      const response = await axios.post(`${Url}/items`, parsedData);
 
       console.log(response.data);
 
@@ -261,7 +254,7 @@ const Page = () => {
 
       console.log("ITEM DATA: ", edititemData);
       const response = await axios.patch(
-        `http://localhost:4000/items/${selectedItem.id}`,
+        `${Url}/items/${selectedItem.id}`,
         parsedData
       );
 

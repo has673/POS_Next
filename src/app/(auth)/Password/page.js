@@ -10,11 +10,12 @@ import axios from "axios";
 import "./style.css";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const router = useRouter();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +28,7 @@ const page = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/auth/recover-password",
+        `${Url}/auth/recover-password`,
         {
           email: formData.email,
           password: formData.password,
@@ -76,4 +77,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

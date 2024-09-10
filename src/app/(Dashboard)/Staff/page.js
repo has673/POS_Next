@@ -25,6 +25,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -34,7 +35,7 @@ const Page = () => {
       try {
         setLoading(true);
         const token = Cookies.get("token");
-        const response = await axios.get("http://localhost:4000/employees", {
+        const response = await axios.get(`${Url}/employees`, {
           headers: {
             Authorization: token,
           },
@@ -55,7 +56,7 @@ const Page = () => {
   // Function to handle removal of an employee
   const remove = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/employees/${id}`);
+      await axios.delete(`${Url}/employees/${id}`);
       setData((prevData) => prevData.filter((item) => item.id !== id));
       setCount((prevCount) => prevCount - 1);
     } catch (error) {

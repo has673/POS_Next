@@ -12,7 +12,7 @@ const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [reservationData, setReservationData] = useState({
     customer: {
       fullName: "",
@@ -80,10 +80,7 @@ const Page = () => {
         },
       };
 
-      const res = await axios.post(
-        "http://localhost:4000/reservaton",
-        parsedData
-      );
+      const res = await axios.post(`${Url}/reservaton`, parsedData);
       console.log(res.data);
       getReservations();
     } catch (err) {
@@ -94,7 +91,7 @@ const Page = () => {
   const getReservations = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:4000/reservaton");
+      const response = await axios.get(`${Url}/reservaton`);
       console.log(response);
       setReservations(response.data);
     } catch (err) {
