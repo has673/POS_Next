@@ -20,6 +20,7 @@ const Page = ({ params }) => {
       const res = await axios.get(`${Url}/auth/${id}`, {
         headers: {
           Authorization: token,
+          "ngrok-skip-browser-warning": "abc",
         },
       });
       setUserData(res.data);
@@ -38,6 +39,7 @@ const Page = ({ params }) => {
       const response = await axios.put(`${Url}/auth/${id}`, userdata, {
         headers: {
           Authorization: token,
+          "ngrok-skip-browser-warning": "abc",
         },
       });
       console.log(response.data);

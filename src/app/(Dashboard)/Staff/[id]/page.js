@@ -13,6 +13,7 @@ const Page = async ({ params }) => {
     const response = await fetch(`${Url}/employees/${id}`, {
       headers: {
         Authorization: token,
+        "ngrok-skip-browser-warning": "abc",
       },
     });
     if (!response.ok) {

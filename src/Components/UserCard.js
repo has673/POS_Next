@@ -33,6 +33,7 @@ const UserCard = ({ user }) => {
         {
           headers: {
             Authorization: token,
+            "ngrok-skip-browser-warning": "abc",
           },
         }
       );

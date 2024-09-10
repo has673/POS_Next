@@ -93,6 +93,7 @@ const Page = () => {
       const response = await axios.post(`${Url}/categories`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "ngrok-skip-browser-warning": "abc",
         },
       });
 
@@ -128,6 +129,7 @@ const Page = () => {
       const result = await axios.get(`${Url}/categories`, {
         headers: {
           Authorization: token,
+          "ngrok-skip-browser-warning": "abc",
         },
       });
       setCategories(result.data);

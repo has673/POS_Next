@@ -17,6 +17,7 @@ const Page = () => {
       const response = await axios.get(`${Url}/auth`, {
         headers: {
           Authorization: token,
+          "ngrok-skip-browser-warning": "abc",
         },
       });
       setUsers(response.data);

@@ -42,6 +42,7 @@ const Page = () => {
       const result = await axios.get(`${Url}/categories`, {
         headers: {
           Authorization: token,
+          "ngrok-skip-browser-warning": "abc",
         },
       });
       setCategories(result.data);
@@ -93,6 +94,7 @@ const Page = () => {
         {
           headers: {
             Authorization: token,
+            "ngrok-skip-browser-warning": "abc",
           },
         }
       );

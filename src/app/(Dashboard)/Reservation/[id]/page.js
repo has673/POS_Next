@@ -42,6 +42,7 @@ const Page = ({ params }) => {
       const res = await axios.get(`${Url}/reservaton/${id}`, {
         headers: {
           Authorization: token,
+          "ngrok-skip-browser-warning": "abc",
         },
       });
       setReservation(res.data);

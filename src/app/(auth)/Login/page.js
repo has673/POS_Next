@@ -89,6 +89,7 @@ const Page = () => {
       const response = await axios.get(`${Url}/auth/userData/get`, {
         headers: {
           Authorization: token, // Fixed the Authorization header format
+          "ngrok-skip-browser-warning": "abc",
         },
       });
       return response.data; // Return the actual data, not the response object
