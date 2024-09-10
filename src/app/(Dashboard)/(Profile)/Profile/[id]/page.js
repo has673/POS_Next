@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 import React, { useEffect, useState } from "react";
 
-const page = ({ params }) => {
+const Page = ({ params }) => {
   const { id } = params;
   const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [userdata, setUserData] = useState({
@@ -121,4 +121,4 @@ const page = ({ params }) => {
   );
 };
 
-export default page;
+export default Page;

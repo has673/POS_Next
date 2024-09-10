@@ -21,7 +21,7 @@ import {
 import Cookies from "js-cookie";
 import Head from "next/head";
 
-const page = () => {
+const Page = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
@@ -135,4 +135,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

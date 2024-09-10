@@ -10,7 +10,7 @@ import axios from "axios";
 import "./style.css";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -77,4 +77,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

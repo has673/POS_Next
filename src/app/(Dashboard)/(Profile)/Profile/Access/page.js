@@ -6,7 +6,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [users, setUsers] = useState([]);
   const [Loading, setLoading] = useState(false);
   const token = Cookies.get("token");
@@ -42,4 +42,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

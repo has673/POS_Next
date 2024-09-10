@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [orders, setOrders] = useState([]);
@@ -142,4 +142,4 @@ const page = () => {
     </div>
   );
 };
-export default page;
+export default Page;
