@@ -18,7 +18,7 @@ const Logout = () => {
     <button onClick={onClick}>
       <div className=" flex flex-col items-center">
         <Image src="/logout.png" width={20} height={10} />
-        <p className="text-white text-sm">logout</p>
+        <p className="text-white text-sm">Logout</p>
       </div>
     </button>
   );
