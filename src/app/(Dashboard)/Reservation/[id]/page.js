@@ -180,46 +180,52 @@ const Page = ({ params }) => {
       </div>
       <h1 className="text-white ml-5 my-5">Reservation Details</h1>
       <Spin spinning={loading}>
-        <div className="flex justify-center">
-          <div className="w-4/5 bg-bg h-reservation mr-5 rounded-r-2xl rounded-l-2xl p-4">
-            <div className="flex justify-between gap-4">
-              <div>
-                <h4 className="text-pink">Table</h4>
-                <h5 className="text-white">{reservation?.tableNumber}</h5>
-              </div>
-              <div>
-                <h4 className="text-pink">Floor</h4>
-                <h5 className="text-white">{reservation?.floor}</h5>
-              </div>
-              <div>
-                <h4 className="text-pink">Guests</h4>
-                <h5 className="text-white">{reservation?.paxNumber}</h5>
-              </div>
-              <div>
-                <h4 className="text-pink">Date</h4>
-                <h5 className="text-white">
-                  {reservation?.reservationDate &&
-                    new Date(reservation.reservationDate).toLocaleDateString()}
-                </h5>
-              </div>
-              <div>
-                <h4 className="text-pink">Time</h4>
-                <h5 className="text-white">
-                  {reservation?.reservationTime &&
-                    new Date(reservation.reservationTime).toLocaleTimeString()}
-                </h5>
-              </div>
-              <div>
-                <h4 className="text-pink">Fee</h4>
-                <h5 className="text-white">{reservation?.depositFee}</h5>
-              </div>
-              <div>
-                <h4 className="text-pink">Status</h4>
-                <h5 className="text-white">{reservation?.status}</h5>
+        {reservation && (
+          <div className="flex justify-center">
+            <div className="w-4/5 bg-bg h-reservation mr-5 rounded-r-2xl rounded-l-2xl p-4">
+              <div className="flex justify-between gap-4">
+                <div>
+                  <h4 className="text-pink">Table</h4>
+                  <h5 className="text-white">{reservation?.tableNumber}</h5>
+                </div>
+                <div>
+                  <h4 className="text-pink">Floor</h4>
+                  <h5 className="text-white">{reservation?.floor}</h5>
+                </div>
+                <div>
+                  <h4 className="text-pink">Guests</h4>
+                  <h5 className="text-white">{reservation?.paxNumber}</h5>
+                </div>
+                <div>
+                  <h4 className="text-pink">Date</h4>
+                  <h5 className="text-white">
+                    {reservation?.reservationDate &&
+                      new Date(
+                        reservation.reservationDate
+                      ).toLocaleDateString()}
+                  </h5>
+                </div>
+                <div>
+                  <h4 className="text-pink">Time</h4>
+                  <h5 className="text-white">
+                    {reservation?.reservationTime &&
+                      new Date(
+                        reservation.reservationTime
+                      ).toLocaleTimeString()}
+                  </h5>
+                </div>
+                <div>
+                  <h4 className="text-pink">Fee</h4>
+                  <h5 className="text-white">{reservation?.depositFee}</h5>
+                </div>
+                <div>
+                  <h4 className="text-pink">Status</h4>
+                  <h5 className="text-white">{reservation?.status}</h5>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}{" "}
       </Spin>
       <h1 className="text-white ml-5 my-5">Customer Details</h1>
       <Spin spinning={loadingCustomer}>
