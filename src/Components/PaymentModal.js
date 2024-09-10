@@ -20,7 +20,7 @@ const PaymentModal = ({ open, close, order }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/stripe/${order.id}`,
+        `${Url}/stripe/${order.id}`,
         { amount: amount },
         {
           headers: {
