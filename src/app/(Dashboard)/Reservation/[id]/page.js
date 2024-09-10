@@ -111,7 +111,11 @@ const Page = ({ params }) => {
   const getCustomer = async (customerId) => {
     setLoadingCustomer(true);
     try {
-      const res = await axios.get(`${Url}/customer/${customerId}`);
+      const res = await axios.get(`${Url}/customer/${customerId}`, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       setCustomer(res.data);
     } catch (err) {
       console.log(err);
