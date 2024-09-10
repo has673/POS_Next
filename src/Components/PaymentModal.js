@@ -5,6 +5,7 @@ import { Modal, ModalBody } from "flowbite-react";
 import { loadStripe } from "@stripe/stripe-js";
 
 const PaymentModal = ({ open, close, order }) => {
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [cardNumber, setCardNumber] = useState("");
   const [amount, setAmount] = useState(0);
   const [expiryDate, setExpiryDate] = useState("");
@@ -20,7 +21,12 @@ const PaymentModal = ({ open, close, order }) => {
     try {
       const response = await axios.post(
         `http://localhost:4000/stripe/${order.id}`,
-        { amount: amount }
+        { amount: amount },
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "abc",
+          },
+        }
       );
       setClientSecret(response.data.clientSecret);
 

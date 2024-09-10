@@ -4,6 +4,7 @@ import Button from "./Button";
 import axios from "axios";
 
 const Modalform = ({ onOpen, close }) => {
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [formData, setFormData] = useState({
     Name: "",
     email: "",
@@ -41,8 +42,14 @@ const Modalform = ({ onOpen, close }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/employees",
-        formattedData
+        `${Url}/employees`,
+        formattedData,
+
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "abc",
+          },
+        }
       );
       console.log(response.data);
 

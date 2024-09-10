@@ -5,6 +5,7 @@ import React, { useState } from "react";
 
 // Custom Table component with pagination
 const EmployeeAttendance = ({ data }) => {
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 9;
@@ -34,9 +35,14 @@ const EmployeeAttendance = ({ data }) => {
   const onClick = async (id) => {
     try {
       const response = await axios.patch(
-        `http://localhost:4000/employees/${id}/attendance`,
+        `${Url}/employees/${id}/attendance`,
 
-        status
+        status,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "abc",
+          },
+        }
       );
       console.log(response);
     } catch (err) {

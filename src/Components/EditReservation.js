@@ -9,6 +9,7 @@ const EditReservation = ({ open, close, reservation, customer }) => {
   // const { id } = reservation;
 
   // const [reservationId, setReservationId] = useState(reservation.id);
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [reservationData, setReservationData] = useState({
     customer: {
       fullName: "",
@@ -116,15 +117,11 @@ const EditReservation = ({ open, close, reservation, customer }) => {
         paymentMethod: reservationData.paymentMethod,
       };
 
-      const res = await axios.put(
-        `http://localhost:4000/reservaton/${id}`,
-        parsedData,
-        {
-          headers: {
-            "ngrok-skip-browser-warning": "abc",
-          },
-        }
-      );
+      const res = await axios.put(`Url/reservaton/${id}`, parsedData, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       console.log(res.data);
       close();
     } catch (err) {
