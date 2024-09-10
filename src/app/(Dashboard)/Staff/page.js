@@ -38,6 +38,7 @@ const Page = () => {
         const response = await axios.get(`${Url}/employees`, {
           headers: {
             Authorization: token,
+            "ngrok-skip-browser-warning": "abc",
           },
         });
         const result = response.data;
