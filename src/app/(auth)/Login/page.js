@@ -58,7 +58,8 @@ const Page = () => {
       console.log(response.data);
 
       dispatch(loginSuccess(response.data));
-      dispatch(setUserData(await getUser()));
+      const res = await getUser();
+      dispatch(setUserData(res));
       router.push("/Staff");
     } catch (err) {
       console.log(err);
