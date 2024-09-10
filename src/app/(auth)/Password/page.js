@@ -35,6 +35,7 @@ const Page = () => {
         },
         {
           withCredentials: true,
+          "ngrok-skip-browser-warning": "abc",
         }
       );
 
