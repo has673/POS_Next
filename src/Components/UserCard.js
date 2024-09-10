@@ -9,6 +9,7 @@ import axios from "axios";
 const toggleArray = ["Category", "Staff", "Reservation"];
 
 const UserCard = ({ user }) => {
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [toggleStates, setToggleStates] = useState({
     allowCategoryModify: false,
     allowStaffModify: false,
@@ -27,7 +28,7 @@ const UserCard = ({ user }) => {
     const token = Cookies.get("token");
     try {
       const response = await axios.patch(
-        ` http://localhost:4000/auth/${user.id}/accesschange`,
+        `${Url}/auth/${user.id}/accesschange`,
         toggleStates,
         {
           headers: {

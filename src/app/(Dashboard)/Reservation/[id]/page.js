@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 
 const Page = ({ params }) => {
   const { id } = params || {};
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reservation, setReservation] = useState(null);
   const [customerId, setCustomerId] = useState(null);
@@ -24,7 +25,7 @@ const Page = ({ params }) => {
   const deleteReservation = async (id) => {
     try {
       setLoadingCustomer(true);
-      const res = await axios.delete(`http://localhost:4000/reservaton/${id}`);
+      const res = await axios.delete(`${Url}/reservaton/${id}`);
       route.push("/Reservation");
       console.log(res.data);
     } catch (err) {
@@ -38,7 +39,7 @@ const Page = ({ params }) => {
     try {
       setLoading(true);
       const token = Cookies.get("token");
-      const res = await axios.get(`http://localhost:4000/reservaton/${id}`, {
+      const res = await axios.get(`${Url}/reservaton/${id}`, {
         headers: {
           Authorization: token,
         },
@@ -91,10 +92,7 @@ const Page = ({ params }) => {
         },
       };
 
-      const res = await axios.put(
-        `http://localhost:4000/reservaton/${id}`,
-        parsedData
-      );
+      const res = await axios.put(`${Url}/reservaton/${id}`, parsedData);
       console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -104,9 +102,7 @@ const Page = ({ params }) => {
   const getCustomer = async (customerId) => {
     setLoadingCustomer(true);
     try {
-      const res = await axios.get(
-        `http://localhost:4000/customer/${customerId}`
-      );
+      const res = await axios.get(`${Url}/customer/${customerId}`);
       setCustomer(res.data);
     } catch (err) {
       console.log(err);

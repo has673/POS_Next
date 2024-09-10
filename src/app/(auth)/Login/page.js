@@ -23,6 +23,7 @@ import Head from "next/head";
 
 const Page = () => {
   const dispatch = useDispatch();
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -41,7 +42,7 @@ const Page = () => {
     dispatch(loginStart());
     try {
       const response = await axios.post(
-        "http://localhost:4000/auth/login",
+        `${Url}/auth/login`,
         {
           email: formData.email,
           password: formData.password,
@@ -84,14 +85,11 @@ const Page = () => {
   const getUser = useCallback(async () => {
     try {
       const token = Cookies.get("token");
-      const response = await axios.get(
-        "http://localhost:4000/auth/userData/get",
-        {
-          headers: {
-            Authorization: token, // Fixed the Authorization header format
-          },
-        }
-      );
+      const response = await axios.get(`${Url}/auth/userData/get`, {
+        headers: {
+          Authorization: token, // Fixed the Authorization header format
+        },
+      });
       return response.data; // Return the actual data, not the response object
     } catch (err) {
       console.error("Error fetching user data:", err); // Improved error handling

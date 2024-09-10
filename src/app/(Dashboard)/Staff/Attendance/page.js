@@ -17,6 +17,7 @@ const Page = () => {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
 
   // Fetch data when the component mounts
   useEffect(() => {
@@ -24,9 +25,7 @@ const Page = () => {
       try {
         setLoading(true);
         const token = Cookies.get("token");
-        const response = await axios.get(
-          "http://localhost:4000/employees/get/attendance"
-        );
+        const response = await axios.get(`${Url}/employees/get/attendance`);
         const result = response.data;
         setData(result);
         setCount(result.length);
