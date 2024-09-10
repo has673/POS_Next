@@ -118,9 +118,15 @@ const EditReservation = ({ open, close, reservation, customer }) => {
 
       const res = await axios.put(
         `http://localhost:4000/reservaton/${id}`,
-        parsedData
+        parsedData,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "abc",
+          },
+        }
       );
       console.log(res.data);
+      close();
     } catch (err) {
       console.log(err);
     }
