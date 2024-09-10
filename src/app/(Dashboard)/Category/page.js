@@ -196,7 +196,11 @@ const Page = () => {
         price: Number(itemData.price),
         categoryId: Number(itemData.categoryId),
       };
-      const response = await axios.post(`${Url}/items`, parsedData);
+      const response = await axios.post(`${Url}/items`, parsedData, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
 
       console.log(response.data);
 
@@ -261,7 +265,12 @@ const Page = () => {
       console.log("ITEM DATA: ", edititemData);
       const response = await axios.patch(
         `${Url}/items/${selectedItem.id}`,
-        parsedData
+        parsedData,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "abc",
+          },
+        }
       );
 
       console.log(response.data);
