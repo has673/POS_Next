@@ -143,7 +143,11 @@ const Page = () => {
   const getitems = async () => {
     try {
       setLoadingItem(true);
-      const res = await axios.get(`${Url}/items`);
+      const res = await axios.get(`${Url}/items`, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       setItems(res.data);
       console.log("-------------ss-s-s-", res.data);
     } catch (err) {
