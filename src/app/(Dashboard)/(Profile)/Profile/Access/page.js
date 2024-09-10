@@ -10,10 +10,11 @@ const page = () => {
   const [users, setUsers] = useState([]);
   const [Loading, setLoading] = useState(false);
   const token = Cookies.get("token");
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const getUsers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:4000/auth", {
+      const response = await axios.get(`${Url}/auth`, {
         headers: {
           Authorization: token,
         },

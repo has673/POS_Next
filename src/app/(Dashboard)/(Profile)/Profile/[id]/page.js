@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 
 const page = ({ params }) => {
   const { id } = params;
+  const Url = process.env.NEXT_PUBLIC_NEST_BACKEND_SERVER;
   const [userdata, setUserData] = useState({
     username: "",
     email: "",
@@ -16,7 +17,7 @@ const page = ({ params }) => {
   const getUser = async (id) => {
     try {
       const token = Cookies.get("token");
-      const res = await axios.get(`http://localhost:4000/auth/${id}`, {
+      const res = await axios.get(`${Url}/auth/${id}`, {
         headers: {
           Authorization: token,
         },
@@ -34,15 +35,11 @@ const page = ({ params }) => {
     e.preventDefault();
     const token = Cookies.get("token");
     try {
-      const response = await axios.put(
-        `http://localhost:4000/auth/${id}`,
-        userdata,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await axios.put(`${Url}/auth/${id}`, userdata, {
+        headers: {
+          Authorization: token,
+        },
+      });
       console.log(response.data);
       getUser(id);
     } catch (err) {
