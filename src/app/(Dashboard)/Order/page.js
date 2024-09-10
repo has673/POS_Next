@@ -48,7 +48,11 @@ const Page = () => {
       const url = status
         ? `${Url}/order/filter/status?status=${status}`
         : `${Url}/order`;
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       setOrders(response.data);
     } catch (err) {
       console.log(err);

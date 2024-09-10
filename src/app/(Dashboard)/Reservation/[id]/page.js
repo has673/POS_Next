@@ -25,7 +25,11 @@ const Page = ({ params }) => {
   const deleteReservation = async (id) => {
     try {
       setLoadingCustomer(true);
-      const res = await axios.delete(`${Url}/reservaton/${id}`);
+      const res = await axios.delete(`${Url}/reservaton/${id}`, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       route.push("/Reservation");
       console.log(res.data);
     } catch (err) {
@@ -93,7 +97,11 @@ const Page = ({ params }) => {
         },
       };
 
-      const res = await axios.put(`${Url}/reservaton/${id}`, parsedData);
+      const res = await axios.put(`${Url}/reservaton/${id}`, parsedData, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       console.log(res.data);
     } catch (err) {
       console.log(err);

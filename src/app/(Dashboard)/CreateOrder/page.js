@@ -56,7 +56,11 @@ const Page = () => {
   const fetchItems = async () => {
     try {
       setLoadingItems(true);
-      const result = await axios.get(`${Url}/items`);
+      const result = await axios.get(`${Url}/items`, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       setItems(result.data);
     } catch (err) {
       console.log(err);

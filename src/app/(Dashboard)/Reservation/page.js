@@ -80,7 +80,11 @@ const Page = () => {
         },
       };
 
-      const res = await axios.post(`${Url}/reservaton`, parsedData);
+      const res = await axios.post(`${Url}/reservaton`, parsedData, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       console.log(res.data);
       getReservations();
     } catch (err) {
@@ -91,7 +95,11 @@ const Page = () => {
   const getReservations = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${Url}/reservaton`);
+      const response = await axios.get(`${Url}/reservaton`, {
+        headers: {
+          "ngrok-skip-browser-warning": "abc",
+        },
+      });
       console.log(response);
       setReservations(response.data);
     } catch (err) {

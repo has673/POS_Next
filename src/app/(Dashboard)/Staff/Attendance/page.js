@@ -25,7 +25,11 @@ const Page = () => {
       try {
         setLoading(true);
         const token = Cookies.get("token");
-        const response = await axios.get(`${Url}/employees/get/attendance`);
+        const response = await axios.get(`${Url}/employees/get/attendance`, {
+          headers: {
+            "ngrok-skip-browser-warning": "abc",
+          },
+        });
         const result = response.data;
         setData(result);
         setCount(result.length);
