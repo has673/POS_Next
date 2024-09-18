@@ -17,6 +17,7 @@ export const metadata = {
   title: "CYPSOS",
   description: "Point of Sale",
   other: { pinterest: "nopin" },
+  manifest: "../../manifest.json",
 };
 
 export default function RootLayout({ children }) {
