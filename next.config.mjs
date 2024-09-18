@@ -9,16 +9,20 @@
 
 /** @type {import('next').NextConfig} */
 import nextPWA from "next-pwa";
+
 const withPWA = nextPWA({
   dest: "public",
   register: true,
   skipWaiting: true,
 });
 
-const nextConfig = withPWA({
+const nextConfig = {
   images: {
     domains: ["nestjs-pos.s3.ap-south-1.amazonaws.com"], // Your image domain
   },
-});
+};
 
-module.exports = nextConfig;
+// Properly merge withPWA and nextConfig
+export default withPWA({
+  ...nextConfig,
+});
